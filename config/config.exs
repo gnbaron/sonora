@@ -23,6 +23,13 @@ config :logger, :console,
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
 
+# Configure guardian
+config :guardian, Guardian,
+  issuer: "Sonora",
+  ttl: { 3, :days },
+  verify_issuer: true,
+  serializer: Sonora.GuardianSerializer
+
 # Configure phoenix generators
 config :phoenix, :generators,
   migration: true,

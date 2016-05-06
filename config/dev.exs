@@ -12,13 +12,16 @@ config :sonora, Sonora.Endpoint,
   code_reloader: true,
   cache_static_lookup: false,
   check_origin: false,
-  watchers: []
+  watchers: [
+    node: ["webpack.devserver.js", "--color"]
+  ]
 
 # Watch static and templates for browser reloading.
 config :sonora, Sonora.Endpoint,
   live_reload: [
     patterns: [
-      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      # ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      ~r{priv/gettext/.*(po)$},
       ~r{web/views/.*(ex)$},
       ~r{web/templates/.*(eex)$}
     ]
@@ -40,3 +43,7 @@ config :sonora, Sonora.Repo,
   database: "sonora_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Guardian configuration
+config :guardian, Guardian,
+  secret_key: "hQ8yfsYct2u8JsAD6x8IPjzceZxDZHy+JF/tB/xFf1gIve2m9oluQgZSYzE+AFKg"
