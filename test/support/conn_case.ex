@@ -14,6 +14,9 @@ defmodule Sonora.ConnCase do
   """
 
   use ExUnit.CaseTemplate
+  use Plug.Test
+  use Phoenix.ConnTest
+  @endpoint Sonora.Endpoint
 
   using do
     quote do
@@ -21,21 +24,37 @@ defmodule Sonora.ConnCase do
       use Phoenix.ConnTest
 
       alias Sonora.Repo
-      import Ecto.Model
-      import Ecto.Query, only: [from: 2]
-
+      import Ecto
+      import Ecto.Changeset
+      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Model, except: [build: 2]
       import Sonora.Router.Helpers
 
       # The default endpoint for testing
       @endpoint Sonora.Endpoint
+
+      def login_user, do: Sonora.ConnCase.login_user(conn)
     end
   end
 
   setup tags do
-    unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Sonora.Repo, [])
-    end
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Sonora.Repo)
 
-    :ok
+    conn = Phoenix.ConnTest.conn()
+
+    if tags[:logged_in] do
+      {user, jwt} = login_user(conn)
+      conn = Phoenix.ConnTest.conn() |> put_req_header("authorization", jwt)
+      {:ok, conn: conn, user: user, jwt: jwt}
+    else
+      {:ok, conn: Phoenix.ConnTest.conn()}
+    end
+  end
+
+  def login_user(conn) do
+    user = Sonora.Factory.create(:user)
+    conn = post conn, "/api/session", %{email: user.email, password: user.password}
+    %{"jwt" => jwt} = json_response(conn, 201)
+    {user, jwt}
   end
 end

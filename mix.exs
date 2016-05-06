@@ -37,6 +37,7 @@ defmodule Sonora.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:ecto, "~> 2.0.0-rc.4", override: true},
      {:cowboy, "~> 1.0"},
+     {:ex_machina, "~> 0.6.1", only: :test},
      {:guardian, "~> 0.10.1"}]
   end
 

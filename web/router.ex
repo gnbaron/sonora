@@ -16,11 +16,17 @@ defmodule Sonora.Router do
   end
 
   pipeline :secured do
-    plug Sonora.Plug.EnsureAuthenticated
+    plug Sonora.Plug.AuthVerify
   end
 
-  scope "/api", SystextilDDP do
+  scope "/api", Sonora do
     pipe_through :api
+
+    scope "/session" do
+      post "/", SessionController, :create
+      delete "/", SessionController, :delete
+      get "/current_user", SessionController, :current_user
+    end
 
     scope "/secured" do
       pipe_through :secured
