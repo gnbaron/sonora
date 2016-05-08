@@ -22,6 +22,8 @@ defmodule Sonora.Router do
   scope "/api", Sonora do
     pipe_through :api
 
+    post "/registration", RegistrationController, :create
+
     scope "/session" do
       post "/", SessionController, :create
       delete "/", SessionController, :delete
@@ -40,11 +42,7 @@ defmodule Sonora.Router do
   scope "/", Sonora do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "*path", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Sonora do
-  #   pipe_through :api
-  # end
 end

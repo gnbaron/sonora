@@ -1,0 +1,51 @@
+{
+  "settings": {
+    "root": {
+      "pathToSassDirectory": "./",
+      "sassDirectory": "web/static/css",
+      "sassImportFile": "application.scss"
+    },
+    "modules": {
+      "modulesDirectory": "modules",
+      "modulesImportFile": "_modules.scss",
+      "moduleFiles": [
+        "_box.scss",
+        "_button.scss",
+        "_container.scss",
+        "_controls.scss",
+        "_dropdown.scss",
+        "_header.scss",
+        "_left-nav.scss",
+        "_loading-indicator.scss",
+        "_login.scss",
+        "_notification.scss",
+        "_overlay.scss",
+        "_popper.scss",
+        "_switch.scss",
+        "_table.scss",
+        "_title.scss"
+      ]
+    }
+  },
+  "template": {
+    "directories": [
+      "global",
+      "libs",
+      "skins",
+      "skins/black_green"
+    ],
+    "files": [
+      "global/_base.scss",
+      "global/_layout.scss",
+      "global/_settings.scss",
+      "global/_skin.scss",
+      "global/_typography.scss",
+      "global/_utilities.scss",
+      "libs/_library-variable-overrides.scss",
+      "libs/_normalize.scss",
+      "skins/black_green/_library-variable-overrides.scss",
+      "skins/black_green/_settings.scss",
+      "skins/black_green/_skin.scss"
+    ]
+  }
+}

@@ -6,7 +6,7 @@
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "globals": {
     "Promise": false,
-    "SystextilDDP": false,
+    "sonora": false,
     "jasmine": false
   },
   "rules": {
