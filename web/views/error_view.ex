@@ -6,6 +6,7 @@ defmodule Sonora.ErrorView do
   end
 
   def render("error.json", %{errors: errors}) do
+    errors = Enum.map(errors, fn {field, message} -> {field, parse_error message} end)
     Enum.into(errors, %{})
   end
 
@@ -41,6 +42,10 @@ defmodule Sonora.ErrorView do
   # template is found, let's render it as 500
   def template_not_found(_template, assigns) do
     render "500.html", assigns
+  end
+
+  def parse_error({msg, _opts}) do
+    msg
   end
 
 end

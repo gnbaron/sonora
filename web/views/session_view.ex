@@ -4,7 +4,11 @@ defmodule Sonora.SessionView do
   def render("show.json", %{jwt: jwt, user: user}) do
     %{
       jwt: jwt,
-      user: user
+      user: %{
+        id: user.id,
+        name: user.name,
+        email: user.email
+      }
     }
   end
 
