@@ -1,0 +1,10 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - title module
+// styles for the title module
+.title {  
+  @each $state in primary, info, success, warning, danger {
+    &.is-#{$state} {
+      color: nth(map-get($colors, $state), 1);
+    }
+  }
+}

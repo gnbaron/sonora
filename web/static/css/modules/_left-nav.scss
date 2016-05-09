@@ -1,0 +1,41 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - side-nav module
+// styles for the side-nav module
+#left-nav {
+  .lef-nav-menu {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+    padding-top: 10px;
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      list-style: none;
+
+
+      &.menu-header {
+        padding: 10px 25px 10px $base-app-padding;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        height: 45px;
+        padding: 10px 25px 10px $base-app-padding;
+
+        .fa {
+          width: 20px;
+          margin-right: 10px;
+        }
+
+        i {
+          text-align: left;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - container module
+// styles for the container module
+.container {
+  &.is-big {
+    @include media(min-width 1280px) {
+      max-width: 1280px;
+    }
+  }
+}

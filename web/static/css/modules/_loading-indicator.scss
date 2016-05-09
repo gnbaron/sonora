@@ -1,0 +1,17 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - loading-indicator module
+// styles for the loading-indicator module
+.loading-indicator {
+  position: relative;
+  min-height: 2em;
+
+  //Dont show a loding indicator inside another loader indicator
+  &.visible {
+    .loading-indicator.visible {
+      > .overlay {
+        display: none;
+      }
+    }
+  }
+
+}

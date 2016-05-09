@@ -1,0 +1,54 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - table module
+// styles for the table module
+.table {
+  $detailed-border: 3px solid $secondary;
+
+  .subtitle {
+    color: $text-light;
+  }
+
+  &.is-detailed {
+    @include transition(all 0.3s linear);
+    > tbody > tr {
+      cursor: pointer;
+    }
+
+    tr.is-detailed {
+      border-left: $detailed-border;
+      td {
+        background-color: darken($grey-lighter, 1%);
+      }
+      &:not(first-child) {
+        border-top: 2px solid $grey-light;
+      }
+    }
+
+    tr.detail-row {
+      border-left: $detailed-border;
+      cursor: default;
+      &:after {
+        content: '';
+      }
+      &:hover {
+        background-color: #fff;
+      }
+    }
+  }
+
+  // If there's a table inside another table the last table gets no border. This is a Bulma bug.
+  .table {
+    tr {
+      &:not(last-child) {
+        td {
+          border-bottom-width: 1px;
+        }
+      }
+      &:last-child {
+        td {
+          border-bottom-width: 0px;
+        }
+      }
+    }
+  }
+}

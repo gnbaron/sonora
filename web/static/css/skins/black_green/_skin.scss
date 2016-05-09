@@ -1,0 +1,85 @@
+html, body, #main-container {
+  background: $background;
+}
+
+#header {
+  @extend .is-iverted;
+  box-shadow: $base-box-shadow;
+  background: $primary;
+
+  .user {
+    background: $secondary;
+    a {
+      color: darken($text-invert, 5%);
+      &:hover {
+        color: $text-invert;
+      }
+    }
+  }
+}
+
+#left-nav {
+  $left-nav-background: $grey-lighter;
+  $menu-header-color: darken($grey-light, 20%);
+  $menu-item-selected-background: darken($background, 1%);
+  $app-title-background: $primary;
+  $app-version-background: $green-dark;
+
+  background: $left-nav-background;
+
+  .app-title {
+    background: $app-title-background;
+    border-right: 1px solid darken($app-title-background, 10%);
+    a {
+      color: $text-invert;
+    }
+  }
+
+  .app-version {
+    background: $secondary;
+    color: $text-invert;
+  }
+
+  .lef-nav-menu {
+    border-right: 1px solid lighten($grey, 10%);
+
+    .menu-header {
+      color: $menu-header-color;
+      text-transform: uppercase;
+      background: $left-nav-background !important;
+    }
+    li {
+      a {
+        color: darken($text, 10%);
+      }
+      &:hover {
+        background: $menu-item-selected-background;
+      }
+      a.active {
+        background: $menu-item-selected-background;
+        border-top: 1px solid $secondary;
+        border-bottom: 1px solid $secondary;
+      }
+    }
+  }
+
+}
+
+#page-container {
+  .page {
+    .page-menu {
+      background: $grey-lighter;
+      box-shadow: 0 1px 2px rgba(0,0,0,.1);
+      border-bottom: 1px solid lighten($grey, 10%);
+    }
+
+    .box {
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    }
+  }
+}
+
+#footer {
+  background: $grey-lighter;
+  box-shadow: lighten($grey, 10%) 0px -1px 0px 0px;
+}

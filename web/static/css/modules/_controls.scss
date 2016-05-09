@@ -1,0 +1,88 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - controls module
+// styles for the controls module
+.control {
+  @include clearfix;
+
+  .help {
+  	font-size: $size-normal;
+  	display: block;
+  	padding: 3px 0;
+  }
+
+  //Add is-danger; is-info; ect to helps
+  @each $state in primary, info, success, warning, danger {
+    .help {
+      &.is-#{$state} {
+        color: nth(map-get($colors, $state), 1);
+      }
+    }
+  }
+
+  //Add is-mediun; is-large ect to helps
+  $help-sizes: (
+    small: $size-small,
+    medium: $size-medium,
+    large: $size-large,
+    huge: $size-huge
+  );
+  @each $size, $font-size in $help-sizes {
+    .help {
+      &.is-#{$size} {
+        font-size: $font-size;
+      }
+    }
+  }
+
+  &.column {
+    margin-bottom: 0px !important;
+  }
+
+  .button {
+
+    &:not(:first-child) {
+      margin-right: 5px;
+    }
+  }
+
+  $darker-orange: darken($warning, 35%);
+  .input.is-warning {
+    color: $darker-orange;
+    border-color: $darker-orange;
+  }
+  .help.is-warning {
+    color: $darker-orange;
+    border-color: $darker-orange;
+  }
+
+  &.is-grouped {
+    @include flex-wrap(wrap);
+    .label {
+      width: 100%;
+    }
+    .input-group {
+      @include display(flex);
+      width: 100%;
+      padding-right: 1px;
+      //bring inputs to front
+      @each $state in primary, info, success, warning, danger {
+        .input {
+          &.is-#{$state} {
+            z-index: 10;
+          }
+        }
+      }
+
+      *:not(:first-child) {
+        border-left-width: 0px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+
+      *:not(:last-child) {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+  }
+}

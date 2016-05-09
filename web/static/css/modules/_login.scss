@@ -1,0 +1,44 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - login module
+// styles for the login module
+.login-container {
+  height: 100%;
+  padding-top: 5%;
+  padding-right: 10px;
+  padding-left: 10px;
+
+  .login-title {
+    @include outer-container;
+    font-size: 34px;
+    color: lighten($text, 5%);
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 100;
+
+    .music-symbol {
+      padding: 4px;
+      color: $primary;
+      font-size: $size-1;
+    }
+  }
+
+  .login-form {
+    @include outer-container;
+    max-width: 350px;
+    background: #fff;
+    padding: 15px;
+    padding-top: 20px;
+    border: 1px solid darken($grey-lighter, 10%);
+    border-radius: 5px;
+  }
+
+  .login-button {
+    padding-top: 10px;
+    margin-left: 25%;
+    margin-right: 25%;
+
+    .button {
+      width: 100%;
+    }
+  }
+}

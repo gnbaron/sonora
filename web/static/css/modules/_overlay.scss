@@ -1,0 +1,35 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - overlay module
+// styles for the overlay module
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 9999;
+  &.visible {
+    display: block;
+  }
+  .fa {
+    top: 50%;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -15px;
+    color: black;
+    position: absolute;
+  }
+  &.left {
+    .fa {
+      left: 0px;
+      margin-left: 0px;
+    }
+  }
+  &.right {
+    .fa {
+      right: 0px;
+    }
+  }
+}

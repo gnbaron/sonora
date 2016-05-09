@@ -1,0 +1,29 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - header module
+// styles for the header module
+#header {
+
+  .header-left {
+    .header-item {
+      padding-left: 0px !important;
+    }
+  }
+
+  .header-right {
+    .header-item {
+      padding-right: 0px !important;
+    }
+  }
+
+  .page-title {
+    margin-left: 10px;
+  }
+
+  .user {
+    padding-right: 0px !important;
+
+    .user-name {
+      @include ellipsis(80px);
+    }
+  }
+}

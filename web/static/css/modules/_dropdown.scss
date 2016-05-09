@@ -1,0 +1,75 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - dropdown module
+// styles for the dropdown module
+.dropdown {
+
+  min-width: 18em;
+
+  .dropdown-header {
+    $header-text-color: $text-light;
+    color: $header-text-color;
+    border-bottom: 1px solid lighten($header-text-color, 15%);
+    height: 30px;
+
+    .dropdown-title {
+      float: left;
+      width: 90%;
+      text-align: center;
+    }
+
+    .dropdown-close {
+      float: right;
+      width: 15px;
+      a {
+        .fa {
+          line-height: 20px;
+          font-size: 14px;
+          float: right;
+          color: lighten($header-text-color, 10%);
+          &:hover {
+            color: $text;
+          }
+        }
+      }
+    }
+  }
+
+  .dropdown-search {
+    margin-top: 10px;
+  }
+
+  .dropdown-body {
+
+    li {
+      text-align: left;
+
+      a {
+        display: block;
+        position: relative;
+        color: $text !important;
+        border-radius: $radius;
+        padding: 3px;
+        background-color: transparent;
+
+        &:hover {
+          background-color: $primary;
+          color: $text-invert !important;
+        }
+
+        &.is-active {
+          &:after {
+            font-family: FontAwesome;
+            content: "\f00c";
+            float: right;
+          }
+        }
+      }
+    }
+  }
+
+  &.has-header {
+    .dropdown-body {
+      margin-top: 8px;
+    }
+  }
+}

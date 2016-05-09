@@ -1,0 +1,44 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - utilities
+// global extends, mixins, functions, and utility classes
+// - - - - - - - - - - - - - - - - - - -
+// - - extends
+.transition {
+  @include transition(all 0.2s ease-in);
+}
+.is-iverted {
+  color: $text-invert;
+  a:hover, .header-item, .title {
+    color: $text-invert;
+  }
+  a {
+    color: darken($text-invert, 10%);
+  }
+}
+// - - - - - - - - - - - - - - - - - - -
+// - - mixins
+@mixin vertical-center($height) {
+  height: $height;
+  line-height: $height !important;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+// - - - - - - - - - - - - - - - - - - -
+// - - functions
+
+// - - - - - - - - - - - - - - - - - - -
+// - - utilities
+.is-secondary {
+  background: $secondary;
+  color: $text-invert;
+  &:hover {
+    background: darken($secondary, 5%);
+    color: $text-invert;
+  }
+  &.button {
+    border-color: transparent;
+    // background: darken($secondary, 5%);
+  }
+}
