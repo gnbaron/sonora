@@ -25,8 +25,7 @@ defmodule Sonora.SessionController do
   end
 
   def create_session(conn, user) do
-    {:ok, jwt} = Guardian.encode_and_sign(user, :token)
-
+    {:ok, jwt, _} = Guardian.encode_and_sign(user, :token)
     conn
     |> put_status(:created)
     |> render(Sonora.SessionView, "show.json", jwt: jwt, user: user)
