@@ -193,6 +193,8 @@ html, body, #main-container {
     padding-left: $base-app-padding;
     text-align: center;
     z-index: 1;
+    position: fixed;
+    bottom: 0px;
 
     @include media(max-width $desktop) {
       margin-left: 0;
