@@ -21,6 +21,7 @@
         "_notification.scss",
         "_overlay.scss",
         "_popper.scss",
+        "_search.scss",
         "_switch.scss",
         "_table.scss",
         "_title.scss"

@@ -1,0 +1,30 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - search module
+// styles for the search module
+
+.search-bar {
+  width: 100%;
+
+  .search-field {
+    position: relative;
+  }
+
+  .search-field {
+    -webkit-appearance: none;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 10px 40px 10px 10px;
+    width: 100%;
+  }
+
+  .search-input {
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    padding: 5px 5px;
+    cursor: pointer;
+    font-size: $size-3;
+  }
+
+}
