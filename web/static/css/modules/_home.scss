@@ -1,0 +1,16 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - home module
+// styles for the home module
+
+.music-card {
+  text-align: center;
+  font-size: $size-3;
+  cursor: pointer;
+  background-color: #e6e6e6;
+  color: #000;
+
+  .genre-symbol {
+    font-size: $size-2;
+  }
+
+}

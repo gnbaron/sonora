@@ -53,8 +53,20 @@ class LeftNav extends Component {
         </div>
         <ul className="lef-nav-menu">
           <li className="menu-header">Menu</li>
-          <MenuLink to="/musics" iconClass="fa fa-music" onMenuChange={::this.forceUpdate}>
-            <span>Musics</span>
+          <MenuLink to="/" iconClass="fa fa-home" onMenuChange={::this.forceUpdate}>
+            <span>Explore</span>
+          </MenuLink>
+          <MenuLink to="/songs" iconClass="fa fa-music" onMenuChange={::this.forceUpdate}>
+            <span>Songs</span>
+          </MenuLink>
+          <MenuLink to="/artists" iconClass="fa fa-microphone" onMenuChange={::this.forceUpdate}>
+            <span>Artists</span>
+          </MenuLink>
+          <MenuLink to="/playlists" iconClass="fa fa-play" onMenuChange={::this.forceUpdate}>
+            <span>Playlists</span>
+          </MenuLink>
+          <MenuLink to="/profile" iconClass="fa fa-user" onMenuChange={::this.forceUpdate}>
+            <span>Profile</span>
           </MenuLink>
         </ul>
       </section>

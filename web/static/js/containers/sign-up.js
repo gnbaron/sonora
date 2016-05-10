@@ -27,7 +27,7 @@ class SignUp extends Component {
         <div className="login-form">
           <form onSubmit={handleSubmit(::this.onSubmit)}>
             <FormInput field={name} groupClass="control has-icon">
-              <input type="text" className="input is-medium" placeholder="Usuário" {...name}/>
+              <input type="text" className="input is-medium" placeholder="User" {...name}/>
               <i className="fa fa-user"></i>
             </FormInput>
             <FormInput field={email} groupClass="control has-icon">
@@ -35,11 +35,11 @@ class SignUp extends Component {
               <i className="fa fa-envelope"></i>
             </FormInput>
             <FormInput field={password} groupClass="control has-icon">
-              <input className="input is-medium" type="password" placeholder="Senha" {...password}/>
+              <input className="input is-medium" type="password" placeholder="Password" {...password}/>
               <i className="fa fa-lock"></i>
             </FormInput>
             <FormInput field={password_confirmation} groupClass="control has-icon">
-              <input className="input is-medium" type="password" placeholder="Confirmar senha" {...password_confirmation}/>
+              <input className="input is-medium" type="password" placeholder="Password Confirmation" {...password_confirmation}/>
               <i className="fa fa-check"></i>
             </FormInput>
             <p className="control login-button">
@@ -47,7 +47,7 @@ class SignUp extends Component {
             </p>
             <div className="control">
               <p className="is-text-centered">
-                Já tem cadastro? <Link to='/signin'>Sign In</Link>
+                Already registered? <Link to='/signin'>Sign In</Link>
               </p>
             </div>
           </form>

@@ -15,6 +15,7 @@
         "_controls.scss",
         "_dropdown.scss",
         "_header.scss",
+        "_home.scss",
         "_left-nav.scss",
         "_loading-indicator.scss",
         "_login.scss",

@@ -32,7 +32,7 @@ class SignIn extends Component {
               <i className="fa fa-envelope"></i>
             </FormInput>
             <FormInput field={password} groupClass="control has-icon">
-              <input className="input is-medium" type="password" placeholder="Senha" {...password}/>
+              <input className="input is-medium" type="password" placeholder="Password" {...password}/>
               <i className="fa fa-lock"></i>
             </FormInput>
 

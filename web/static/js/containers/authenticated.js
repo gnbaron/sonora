@@ -55,7 +55,7 @@ class AuthenticatedContainer extends Component {
           </section>
           <footer id="footer" >
             <b>Copyright © 2016 <a href="/" target="_blank">Sonora</a></b>.
-            <span className="is-hidden-mobile">Todos os direitos reservados.</span>
+            <span className="is-hidden-mobile"> All rights reserved.</span>
           </footer>
         </LoadingIndicator>
       </div>

@@ -7,7 +7,7 @@ export default class Search extends Component {
         <div className="column is-11">
           <input
             className="search-field"
-            placeholder="Pesquisar músicas, artistas, usuários, playlists ..."
+            placeholder="Search songs, artists, users, playlists..."
             type="text"
             maxLength="100"
             autoCapitalize="none"

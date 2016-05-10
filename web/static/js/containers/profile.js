@@ -61,7 +61,7 @@ export default class Profile extends Component {
 class ProfileForm extends Component {
 
   componentDidMount() {
-    this.props.dispatch(application.setTitle('Perfil do Usuário'));
+    this.props.dispatch(application.setTitle('Profile'));
   }
 
   render() {
@@ -69,7 +69,7 @@ class ProfileForm extends Component {
     return (
       <div className="page">
         <div className="page-content">
-          <div className="container">
+          <div className="app-container">
             <div className="box">
               <LoadingIndicator loading={submitting}>
                 <form onSubmit={handleSubmit}>
@@ -77,7 +77,7 @@ class ProfileForm extends Component {
                   <div className="columns">
                     <div className="control column is-half-desktop">
                       <FormInput field={name} groupClass="control">
-                        <label className="label">Nome</label>
+                        <label className="label">Name</label>
                         <input type="text" className="input" {... name}></input>
                       </FormInput>
                     </div>
@@ -93,14 +93,14 @@ class ProfileForm extends Component {
                   <div className="columns">
                     <div className="control column is-half-desktop">
                       <FormInput field={password} groupClass="control">
-                        <label className="label">Senha</label>
+                        <label className="label">Password</label>
                         <input type="password" className="input" {... password}></input>
                       </FormInput>
                     </div>
 
                     <div className="control column is-half-desktop">
                       <FormInput field={password_confirmation} groupClass="control">
-                        <label className="label">Confirmar Senha</label>
+                        <label className="label">Password Confirmation</label>
                         <input type="password" className="input" {... password_confirmation}></input>
                       </FormInput>
                     </div>
@@ -108,8 +108,8 @@ class ProfileForm extends Component {
                   </div>
 
                   <div className="control">
-                    <button type="submit" className="button is-pulled-right is-primary">Salvar</button>
-                    <Link to="/" className="button is-pulled-right">Cancelar</Link>
+                    <button type="submit" className="button is-pulled-right is-primary">Save</button>
+                    <Link to="/" className="button is-pulled-right">Cancel</Link>
                   </div>
                 </form>
               </LoadingIndicator>

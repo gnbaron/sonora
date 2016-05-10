@@ -38,10 +38,10 @@ class Header extends Component {
               <DropdownBody>
                 <ul>
                   <li>
-                    <Link to="/profile" onClick={() => this.refs.dropdownUser.close()}><i className="fa fa-cog"></i> Editar Perfil</Link>
+                    <Link to="/profile" onClick={() => this.refs.dropdownUser.close()}><i className="fa fa-cog"></i> Edit Profile</Link>
                   </li>
                   <li>
-                    <Link to="/signin" onClick={onUserSignOut}><i className="fa fa-sign-out"></i> Sair</Link>
+                    <Link to="/signin" onClick={onUserSignOut}><i className="fa fa-sign-out"></i> Logout</Link>
                   </li>
                 </ul>
               </DropdownBody>
