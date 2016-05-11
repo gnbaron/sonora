@@ -1,9 +1,9 @@
-const TITLE_CHANGED = 'ddp/application/TITLE_CHANGED';
-const TOGGLE_LEFT_NAV = 'ddp/application/TOGGLE_LEFT_NAV';
-const CLOSE_LEFT_NAV = 'ddp/application/CLOSE_LEFT_NAV';
-const CLEAN_MESSAGE = 'ddp/application/CLEAN_MESSAGE';
-const SHOW_MESSAGE = 'ddp/application/SHOW_MESSAGE';
-const UNEXPECTED_ERROR = 'ddp/application/UNEXPECTED_ERROR';
+const TITLE_CHANGED = 'sonora/application/TITLE_CHANGED';
+const TOGGLE_LEFT_NAV = 'sonora/application/TOGGLE_LEFT_NAV';
+const CLOSE_LEFT_NAV = 'sonora/application/CLOSE_LEFT_NAV';
+const CLEAN_MESSAGE = 'sonora/application/CLEAN_MESSAGE';
+const SHOW_MESSAGE = 'sonora/application/SHOW_MESSAGE';
+const UNEXPECTED_ERROR = 'sonora/application/UNEXPECTED_ERROR';
 const BEGIN_GLOBAL_LOAD = 'reduxAsyncConnect/BEGIN_GLOBAL_LOAD';
 const END_GLOBAL_LOAD = 'reduxAsyncConnect/END_GLOBAL_LOAD';
 

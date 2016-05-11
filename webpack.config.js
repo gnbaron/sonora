@@ -61,6 +61,9 @@ module.exports = {
         loader: 'babel!eslint'
       },
       {
+        test: /\.json$/, loader: 'json'
+      },
+      {
         test: /\.scss$/,
         loader: prod ? ExtractTextPlugin.extract('style', scssConfig) : 'style-loader!'+scssConfig
       },

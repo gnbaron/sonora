@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 
 export default class Search extends Component {
   render() {
+    let { placeholder = 'Search songs, artists, users, playlists...' } = this.props
     return (
       <div className="search-bar columns">
         <div className="column is-11">
           <input
             className="search-field"
-            placeholder="Search songs, artists, users, playlists..."
+            placeholder={placeholder}
             type="text"
             maxLength="100"
             autoCapitalize="none"

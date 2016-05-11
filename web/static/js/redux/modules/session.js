@@ -1,8 +1,8 @@
 import { httpPost, httpGet, httpDelete, parseJSONAndRethrow, TokenManager } from '../../utils';
 import { push } from 'react-router-redux'
 
-const LOGGED_IN = 'ddp/session/LOGGED_IN';
-const LOGGED_OUT = 'ddp/session/LOGGED_OUT';
+const LOGGED_IN = 'sonora/session/LOGGED_IN';
+const LOGGED_OUT = 'sonora/session/LOGGED_OUT';
 
 const initialState = {
   currentUser: null
