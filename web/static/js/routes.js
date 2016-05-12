@@ -6,6 +6,7 @@ import SignIn from './containers/sign-in';
 import Home from './containers/home';
 import Explore from './containers/explore';
 import Songs from './containers/songs';
+import Artists from './containers/artists';
 import Profile from './containers/profile'
 
 export default (
@@ -17,6 +18,7 @@ export default (
       <IndexRoute component={Home} />
       <Route path="/explore" component={Explore}/>
       <Route path="/songs" component={Songs}/>
+      <Route path="/artists" component={Artists}/>
       <Route path="/profile" component={Profile}/>
     </Route>
   </div>
