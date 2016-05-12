@@ -8,6 +8,7 @@ export default class Search extends Component {
         <div className="column is-11">
           <input
             className="search-field"
+            onChange={this.props.onChange}
             placeholder={placeholder}
             type="text"
             maxLength="100"

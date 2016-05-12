@@ -27,22 +27,41 @@ const mapStateToProps = (state) => ({
 @connect(mapStateToProps)
 export default class Songs extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      genresList: props.genresList,
+      artistsList: props.artistsList,
+      songsList: props.songsList
+    };
+  }
+
   componentDidMount() {
     this.props.dispatch(application.setTitle('Songs'));
+  }
+
+  onSearch(event){
+    let value = event.target.value;
+    let { songsList, artistsList } = this.props;
+    let filtered = songsList.filter(song => {
+      let artist = filterList(artistsList, song.artist_id);
+      return song.title.includes(value) || (artist && artist.name.includes(value));
+    });
+    this.setState({ songsList: filtered });
   }
 
   _renderSearchBox() {
     return (
       <div className="box">
         <div className="box-body">
-          <Search placeholder="Search songs ..."/>
+          <Search placeholder="Search songs ..." onChange={::this.onSearch}/>
         </div>
       </div>
     )
   }
 
   _renderSongsBox() {
-    let { songsList, artistsList, genresList } = this.props;
+    let { songsList = [], artistsList = [], genresList = [] } = this.state;
     return (
       <div className="box">
         <div className="box-body">
@@ -57,13 +76,13 @@ export default class Songs extends Component {
               <Thead name="plus"></Thead>
               <Column name="artist_id" value={artist_id => {
                 if (artist_id) {
-                  return artistsList.filter(artist => artist.id == artist_id)[0].name;
+                  return filterList(artistsList, artist_id).name;
                 }
                 return '';
               }} />
               <Column name="genre_id" value={genre_id => {
                 if (genre_id) {
-                  return genresList.filter(genre => genre.id == genre_id)[0].title;
+                  return filterList(genresList, genre_id).title;
                 }
                 return '';
               }} />
@@ -107,4 +126,8 @@ export default class Songs extends Component {
       </div>
     )
   }
+}
+
+let filterList = (list, id) => {
+  return list.filter(a => a.id == id)[0];
 }
