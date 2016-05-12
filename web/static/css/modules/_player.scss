@@ -1,0 +1,160 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - player module
+// styles for the player module
+
+.no-height {
+  height: 0 !important;
+}
+
+.player-container {
+  margin: 0 auto;
+  overflow: visible;
+
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+
+  background-color: #EAEDEF;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border: 1px;
+  border-color: #000000;
+  box-shadow: 0 10px 20px rgba(0,0,0,.2);
+  z-index: 999;
+}
+
+.artist-info {
+  padding: 10px 35px 35px;
+  margin-left: 5%;
+}
+
+.artist-name,
+.artist-song-name {
+  margin: 0;
+}
+
+.artist-name {
+  margin-bottom: 5px;
+
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.artist-song-name {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.player-progress-container {
+  position: relative;
+
+  width: 90%;
+  height: 9px;
+  margin: 0 auto;
+
+  background-color: #414141;
+  border-radius: 40px;
+}
+
+.player-progress-value {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  background-color: #CDD2D8;
+  border-radius: 40px;
+
+  &:after {
+    position: absolute;
+    top: -3px;
+    right: -6px;
+    content: '';
+
+    width: 15px;
+    height: 15px;
+
+    border-radius: 50%;
+    background-color: $primary;
+    box-shadow: rgba(0,0,0,.2) 0 0 5px 2px;
+  }
+}
+
+.player-options {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0 20px;
+  width: 365px;
+  margin: 0 auto;
+}
+
+.player-buttons {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 135px;
+}
+
+.player-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #D2D7DB;
+
+  background-color: transparent;
+  border: 0;
+  border-radius: 50%;
+  outline: 0;
+  transition: all .4s;
+
+  i {
+    font-size: 28px;
+    margin: 0 auto;
+  }
+
+  &.active {
+    color: $primary;
+  }
+
+  &.big {
+    width: 70px;
+    height: 70px;
+
+    i {
+      font-size: 36px;
+    }
+  }
+
+  &.medium {
+    width: 50px;
+    height: 50px;
+
+    i {
+      font-size: 15px;
+    }
+  }
+
+  &.volume {
+    width: 40px;
+    color: #D2D7DB;
+
+    &.active {
+      color: $primary;
+    }
+  }
+
+  &:disabled {
+    opacity: .5;
+  }
+}
+
+.player-controls {
+  width: 180px;
+
+  .player-btn {
+    color: #fff;
+
+    background-color: $primary;
+  }
+}

@@ -5,10 +5,15 @@ import * as application from '../redux/modules/application';
 import * as artists from '../redux/modules/artists';
 import Search from '../components/search';
 import Table, { Thead, Column } from '../components/table';
+import { bindAsyncActionCreator } from '../utils';
 
 const mapStateToProps = (state) => ({
   currentUser: state.session.currentUser,
   artistsList: state.artists.data
+});
+
+const mapDispatchToProps = dispatch => ({
+  play: bindAsyncActionCreator(application.play, dispatch)
 });
 
 @asyncConnect([
@@ -18,7 +23,7 @@ const mapStateToProps = (state) => ({
     ])
   }
 ])
-@connect(mapStateToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Songs extends Component {
 
   constructor(props) {
@@ -36,7 +41,7 @@ export default class Songs extends Component {
     let value = event.target.value;
     let { artistsList } = this.props;
     let filtered = artistsList.filter(artist => {
-      return artist && artist.name.includes(value);
+      return artist && artist.name.toUpperCase().includes(value.toUpperCase());
     });
     this.setState({ artistsList: filtered });
   }
@@ -53,6 +58,8 @@ export default class Songs extends Component {
 
   _renderArtistsBox() {
     let { artistsList = [] } = this.state;
+    let { play } = this.props;
+    let playSong = () => this.props.dispatch(play);
     return (
       <div className="box">
         <div className="box-body">
@@ -61,11 +68,11 @@ export default class Songs extends Component {
           </div>
           <Table data={artistsList}>
               <Thead name="name">Name</Thead>
-              <Thead name="plus"></Thead>
-              <Column className="table-link table-icon" name="plus"
+              <Thead name="play"></Thead>
+              <Column className="table-link table-icon" name="play"
                 value={() => (
-                  <a onClick={() => {}}>
-                    <i className="fa fa-plus"></i>
+                  <a onClick={() => playSong()}>
+                    <i className="fa fa-play"></i>
                   </a>
                 )}
               />

@@ -8,6 +8,8 @@ import HeaderContainer from '../containers/header';
 import { TokenManager } from '../utils';
 import FlashNotificationContainer from './flash-notification';
 import LoadingIndicator from '../components/loading-indicator';
+import MusicPlayer from '../components/music-player';
+import songs from '../data/audio.json';
 
 class AuthenticatedContainer extends Component {
   componentDidMount() {
@@ -33,6 +35,17 @@ class AuthenticatedContainer extends Component {
     this.props.dispatch(application.toggleLeftNav());
   }
 
+  renderPLayer() {
+    let { playerActive } = this.props;
+    if(playerActive){
+      return (
+        <MusicPlayer songs={songs} autoplay={true} />
+      )
+    } else {
+      return false;
+    }
+  }
+
   render() {
     const { currentUser, leftNavOpen } = this.props;
 
@@ -53,10 +66,7 @@ class AuthenticatedContainer extends Component {
           <section id="page-container">
             {this.props.children}
           </section>
-          <footer id="footer" >
-            <b>Copyright © 2016 <a href="/" target="_blank">Sonora</a></b>.
-            <span className="is-hidden-mobile"> All rights reserved.</span>
-          </footer>
+          {this.renderPLayer()}
         </LoadingIndicator>
       </div>
     );
@@ -82,7 +92,8 @@ const mapStateToProps = (state) => ({
   currentUser: state.session.currentUser,
   leftNavOpen: state.application.leftNavOpen,
   isLoading: state.application.isLoading,
-  isMobileDevice: state.application.enviroment.isMobileDevice
+  isMobileDevice: state.application.enviroment.isMobileDevice,
+  playerActive: state.application.playerActive
 });
 
 export default connect(mapStateToProps)(AuthenticatedContainer);

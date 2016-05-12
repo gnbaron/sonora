@@ -6,6 +6,8 @@ const SHOW_MESSAGE = 'sonora/application/SHOW_MESSAGE';
 const UNEXPECTED_ERROR = 'sonora/application/UNEXPECTED_ERROR';
 const BEGIN_GLOBAL_LOAD = 'reduxAsyncConnect/BEGIN_GLOBAL_LOAD';
 const END_GLOBAL_LOAD = 'reduxAsyncConnect/END_GLOBAL_LOAD';
+const PLAY = 'sonora/application/PLAY';
+const STOP = 'sonora/application/STOP';
 
 const enviroment = {
   isMobileDevice: !!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/),
@@ -17,7 +19,8 @@ const initialState = {
   leftNavOpen: !enviroment.isMobileScreen(),
   messages: [],
   enviroment: enviroment,
-  isLoading: false
+  isLoading: false,
+  playerActive: false
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -38,6 +41,10 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state, isLoading: true};
     case END_GLOBAL_LOAD:
       return { ...state, isLoading: false};
+    case PLAY:
+      return { ...state, playerActive: true};
+    case STOP:
+      return { ...state, playerActive: false};
     default:
       return state;
   }
@@ -89,5 +96,17 @@ export function toggleLeftNav() {
 export function closeLeftNav() {
   return {
     type: CLOSE_LEFT_NAV
+  }
+}
+
+export function play() {
+  return {
+    type: PLAY
+  }
+}
+
+export function stop() {
+  return {
+    type: STOP
   }
 }

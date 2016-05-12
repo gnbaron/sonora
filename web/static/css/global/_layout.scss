@@ -4,7 +4,7 @@
 
 // Be very careful when changing any "overflow" or "height" property in this file
 html {
-  overflow: auto;
+  overflow: scroll;
 }
 
 html, body, #main-container {
@@ -13,7 +13,7 @@ html, body, #main-container {
 }
 
 #app-container {
-  overflow: visible;
+  overflow: auto;
   width: 100%;
   height: 100%;
   position: static;

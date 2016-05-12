@@ -7,13 +7,18 @@ import * as songs from '../redux/modules/songs';
 import * as artists from '../redux/modules/artists';
 import Search from '../components/search';
 import Table, { Thead, Column } from '../components/table';
-import { shuffle } from '../utils/arrays';
+import shuffle from 'shuffle-array';
+import { bindAsyncActionCreator } from '../utils';
 
 const mapStateToProps = (state) => ({
   currentUser: state.session.currentUser,
   genresList: state.genres.data,
   songsList: state.songs.data,
   artistsList: state.artists.data
+});
+
+const mapDispatchToProps = dispatch => ({
+  play: bindAsyncActionCreator(application.play, dispatch)
 });
 
 @asyncConnect([
@@ -25,7 +30,7 @@ const mapStateToProps = (state) => ({
     ])
   }
 ])
-@connect(mapStateToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Explore extends Component {
 
   constructor(props) {
@@ -48,15 +53,15 @@ export default class Explore extends Component {
     let filteredSongs = songsList.filter(song => {
       let artist = filterList(artistsList, song.artist_id);
       let genre = filterList(genresList, song.genre_id);
-      return song.title.includes(value) ||
-        (artist && artist.name.includes(value)) ||
-          (genre && genre.title.includes(value));
+      return song.title.toUpperCase().includes(value.toUpperCase()) ||
+        (artist && artist.name.toUpperCase().includes(value.toUpperCase())) ||
+          (genre && genre.title.toUpperCase().includes(value.toUpperCase()));
     });
     let filteredArtists = artistsList.filter(artist => {
-      return artist.name.includes(value);
+      return artist.name.toUpperCase().includes(value.toUpperCase());
     });
     let filteredGenres = genresList.filter(genre => {
-      return genre.title.includes(value);
+      return genre.title.toUpperCase().includes(value.toUpperCase());
     });
     this.setState({
       songsList: filteredSongs,
@@ -77,9 +82,15 @@ export default class Explore extends Component {
 
   _renderGenresBox() {
     let { genresList } = this.state;
+    let { play } = this.props;
+    let playSong = () => this.props.dispatch(play);
     let renderGenreCard = (genre) => {
       return (
-        <div key={genre.id} className="column card music-card is-quarter" style={{ backgroundColor: genre.color }}>
+        <div key={genre.id}
+          className="column card music-card is-quarter"
+          style={{ backgroundColor: genre.color }}
+          onClick={() => playSong()}>
+
           <div className="card-content">
             {genre.title} <span className="fa fa-music genre-symbol" />
           </div>
@@ -102,27 +113,21 @@ export default class Explore extends Component {
 
   _renderTopSongs() {
     let { songsList } = this.state;
+    let { play } = this.props;
+    let playSong = () => this.props.dispatch(play);
     return (
       <div className="box">
         <div className="box-body">
           <div className="box-header">
-            <span className="box-title">Top Songs</span>
+            <span className="box-title">Songs</span>
           </div>
           <Table data={shuffle(songsList.slice(0, 10))} displayHeader={false}>
               <Thead name="title"></Thead>
               <Thead name="play"></Thead>
-              <Thead name="plus"></Thead>
               <Column className="table-link table-icon" name="play"
                 value={() => (
-                  <a onClick={() => {}}>
+                  <a onClick={() => playSong()}>
                     <i className="fa fa-play"></i>
-                  </a>
-                )}
-              />
-              <Column className="table-link table-icon" name="plus"
-                value={() => (
-                  <a onClick={() => {}}>
-                    <i className="fa fa-plus"></i>
                   </a>
                 )}
               />
@@ -134,19 +139,21 @@ export default class Explore extends Component {
 
   _renderArtistsBox() {
     let { artistsList } = this.state;
+    let { play } = this.props;
+    let playSong = () => this.props.dispatch(play);
     return (
       <div className="box">
         <div className="box-body">
           <div className="box-header">
-            <span className="box-title">Top Artists</span>
+            <span className="box-title">Artists</span>
           </div>
           <Table data={shuffle(artistsList.slice(0, 10))} displayHeader={false}>
               <Thead name="name"></Thead>
-              <Thead name="plus"></Thead>
-              <Column className="table-link table-icon" name="plus"
+              <Thead name="play"></Thead>
+              <Column className="table-link table-icon" name="play"
                 value={() => (
-                  <a onClick={() => {}}>
-                    <i className="fa fa-plus"></i>
+                  <a onClick={() => playSong()}>
+                    <i className="fa fa-play"></i>
                   </a>
                 )}
               />

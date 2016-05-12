@@ -7,12 +7,17 @@ import * as songs from '../redux/modules/songs';
 import * as artists from '../redux/modules/artists';
 import Search from '../components/search';
 import Table, { Thead, Column } from '../components/table';
+import { bindAsyncActionCreator } from '../utils';
 
 const mapStateToProps = (state) => ({
   currentUser: state.session.currentUser,
   genresList: state.genres.data,
   songsList: state.songs.data,
   artistsList: state.artists.data
+});
+
+const mapDispatchToProps = dispatch => ({
+  play: bindAsyncActionCreator(application.play, dispatch)
 });
 
 @asyncConnect([
@@ -24,7 +29,7 @@ const mapStateToProps = (state) => ({
     ])
   }
 ])
-@connect(mapStateToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Songs extends Component {
 
   constructor(props) {
@@ -45,7 +50,8 @@ export default class Songs extends Component {
     let { songsList, artistsList } = this.props;
     let filtered = songsList.filter(song => {
       let artist = filterList(artistsList, song.artist_id);
-      return song.title.includes(value) || (artist && artist.name.includes(value));
+      return song.title.toUpperCase().includes(value.toUpperCase())
+        || (artist && artist.name.toUpperCase().includes(value.toUpperCase()));
     });
     this.setState({ songsList: filtered });
   }
@@ -62,6 +68,8 @@ export default class Songs extends Component {
 
   _renderSongsBox() {
     let { songsList = [], artistsList = [], genresList = [] } = this.state;
+    let { play } = this.props;
+    let playSong = () => this.props.dispatch(play);
     return (
       <div className="box">
         <div className="box-body">
@@ -73,7 +81,6 @@ export default class Songs extends Component {
               <Thead name="artist_id">Artist</Thead>
               <Thead name="genre_id">Genre</Thead>
               <Thead name="play"></Thead>
-              <Thead name="plus"></Thead>
               <Column name="artist_id" value={artist_id => {
                 if (artist_id) {
                   return filterList(artistsList, artist_id).name;
@@ -88,15 +95,8 @@ export default class Songs extends Component {
               }} />
               <Column className="table-link table-icon" name="play"
                 value={() => (
-                  <a onClick={() => {}}>
+                  <a onClick={() => playSong()}>
                     <i className="fa fa-play"></i>
-                  </a>
-                )}
-              />
-              <Column className="table-link table-icon" name="plus"
-                value={() => (
-                  <a onClick={() => {}}>
-                    <i className="fa fa-plus"></i>
                   </a>
                 )}
               />

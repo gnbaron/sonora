@@ -1,0 +1,30 @@
+[
+  {
+    "url": "http://tegos.kz/mp3_rus/rock/Acdc_-_Highway_To_Hell.mp3",
+    "artist": {
+      "name": "ACDC",
+      "song": "Highway to Hell"
+    }
+  },
+  {
+    "url": "http://tegos.kz/mp3_rus/rock/Acdc_-_Back_In_Black.mp3",
+    "artist": {
+      "name": "ACDC",
+      "song": "Back in Black"
+    }
+  },
+  {
+    "url": "http://tegos.ru/dr/razdeli/fans/Metallica/music/Metallica_-_Harvester_Of_Sorrow.mp3",
+    "artist": {
+      "name": "Metallica",
+      "song": "Harvester of Sorrow"
+    }
+  },
+  {
+    "url": "http://midnightoilco.net/sitebuildercontent/sitebuilderfiles/metallicafuel.mp3",
+    "artist": {
+      "name": "Metallica",
+      "song": "Fuel"
+    }
+  }
+]

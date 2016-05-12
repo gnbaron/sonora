@@ -48,7 +48,7 @@ class SignIn extends Component {
             </p>
             <div className="control">
               <p className="is-text-centered">
-              Não tem cadastro? <Link to='/signup'>Sign Up</Link>
+              Not registered? <Link to='/signup'>Sign Up</Link>
               </p>
             </div>
           </form>

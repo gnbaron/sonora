@@ -21,6 +21,7 @@
         "_login.scss",
         "_notification.scss",
         "_overlay.scss",
+        "_player.scss",
         "_popper.scss",
         "_search.scss",
         "_switch.scss",
