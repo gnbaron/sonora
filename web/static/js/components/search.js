@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class Search extends Component {
   render() {
-    let { placeholder = 'Search songs, artists, users, playlists...' } = this.props
+    let { placeholder = 'Search genres, songs, artists, users, playlists...' } = this.props
     return (
       <div className="search-bar columns">
         <div className="column is-11">

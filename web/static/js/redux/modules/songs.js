@@ -1,6 +1,6 @@
-import genres from '../../data/genres.json';
+import songs from '../../data/songs.json';
 
-export const LOAD = 'sonora/genres/LOAD';
+export const LOAD = 'sonora/songs/LOAD';
 
 export const initialState = {
   data: []
@@ -9,7 +9,7 @@ export const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD:
-      state.data = action.genres;
+      state.data = action.songs;
       return state;
     default:
       return state;
@@ -20,7 +20,7 @@ export function load(){
   return dispatch => {
     dispatch({
       type: LOAD,
-      genres: genres
+      songs: songs
     });
   };
 }

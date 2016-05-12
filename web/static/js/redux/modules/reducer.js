@@ -5,6 +5,8 @@ import { reducer as reduxAsyncConnect } from 'redux-async-connect'
 import session from './session';
 import application from './application';
 import genres from './genres';
+import songs from './songs';
+import artists from './artists';
 
 export default combineReducers({
   reduxAsyncConnect,
@@ -12,5 +14,7 @@ export default combineReducers({
   form,
   session,
   application,
-  genres
+  genres,
+  songs,
+  artists
 });

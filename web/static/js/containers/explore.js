@@ -3,17 +3,27 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-async-connect';
 import * as application from '../redux/modules/application';
 import * as genres from '../redux/modules/genres';
+import * as songs from '../redux/modules/songs';
+import * as artists from '../redux/modules/artists';
 import Search from '../components/search';
 import Table, { Thead, Column } from '../components/table';
-import Immutable from 'immutable';
+import { shuffle } from '../utils/arrays';
 
 const mapStateToProps = (state) => ({
   currentUser: state.session.currentUser,
-  genresList: state.genres.get('data')
+  genresList: state.genres.data,
+  songsList: state.songs.data,
+  artistsList: state.artists.data
 });
 
 @asyncConnect([
-  { promise: ({store: {dispatch}}) => dispatch(genres.load()) }
+  { promise: ({store: {dispatch}}) =>
+    Promise.all([
+      dispatch(genres.load()),
+      dispatch(songs.load()),
+      dispatch(artists.load())
+    ])
+  }
 ])
 @connect(mapStateToProps)
 export default class Explore extends Component {
@@ -36,7 +46,7 @@ export default class Explore extends Component {
     let { genresList } = this.props;
     let renderGenreCard = (genre) => {
       return (
-        <div className="column card music-card is-half" style={{ backgroundColor: genre.color }}>
+        <div key={genre.id} className="column card music-card is-quarter" style={{ backgroundColor: genre.color }}>
           <div className="card-content">
             {genre.title} <span className="fa fa-music genre-symbol" />
           </div>
@@ -50,73 +60,23 @@ export default class Explore extends Component {
         </div>
         <div className="box-body">
           <div className="columns is-multiline">
-            {genresList.toJS().map(renderGenreCard)}
+            {genresList.map(renderGenreCard)}
           </div>
         </div>
       </div>
     )
   }
 
-  _renderListsBox() {
-    let lists = [
-      {description: 'Old School Heavy Metal'},
-      {description: 'Classical Essentials'},
-      {description: 'Best of 2015'},
-      {description: 'Melhores Nacionais'},
-      {description: 'Rock Classics 70\'s 80\'s '},
-      {description: 'emusic 2016'},
-      {description: 'Reggae Music'},
-      {description: 'Lounge Music'}
-    ]
+  _renderTopSongs() {
+    let { songsList } = this.props;
     return (
       <div className="box">
         <div className="box-body">
           <div className="box-header">
-            <span className="box-title">Top Lists</span>
+            <span className="box-title">Top Songs</span>
           </div>
-          <Table data={lists} displayHeader={false}>
-              <Thead name="description"></Thead>
-              <Thead name="play"></Thead>
-              <Thead name="plus"></Thead>
-              <Column className="table-link table-icon" name="play"
-                value={() => (
-                  <a onClick={() => {}}>
-                    <i className="fa fa-play"></i>
-                  </a>
-                )}
-              />
-              <Column className="table-link table-icon" name="plus"
-                value={() => (
-                  <a onClick={() => {}}>
-                    <i className="fa fa-plus"></i>
-                  </a>
-                )}
-              />
-          </Table>
-        </div>
-      </div>
-    )
-  }
-
-  _renderTopMusics() {
-    let lists = [
-      {description: 'Master of Puppets'},
-      {description: 'Rainbow in the Dark'},
-      {description: 'Aces High'},
-      {description: 'Bark at the Moon'},
-      {description: 'Fortunate Son'},
-      {description: 'Symphony of Destruction'},
-      {description: 'Rock you like a Hurricane'},
-      {description: 'United'}
-    ]
-    return (
-      <div className="box">
-        <div className="box-body">
-          <div className="box-header">
-            <span className="box-title">Top Musics</span>
-          </div>
-          <Table data={lists} displayHeader={false}>
-              <Thead name="description"></Thead>
+          <Table data={shuffle(songsList.slice(0, 10))} displayHeader={false}>
+              <Thead name="title"></Thead>
               <Thead name="play"></Thead>
               <Thead name="plus"></Thead>
               <Column className="table-link table-icon" name="play"
@@ -140,33 +100,16 @@ export default class Explore extends Component {
   }
 
   _renderArtistsBox() {
-    let lists = [
-      {description: 'Metallica'},
-      {description: 'Pearl Jam'},
-      {description: 'Legião Urbana'},
-      {description: 'ACDC'},
-      {description: 'Dire Straits'},
-      {description: 'Iron Maiden'},
-      {description: 'Dio'},
-      {description: 'Led Zeppelin'}
-    ]
+    let { artistsList } = this.props;
     return (
       <div className="box">
         <div className="box-body">
           <div className="box-header">
             <span className="box-title">Top Artists</span>
           </div>
-          <Table data={lists} displayHeader={false}>
-              <Thead name="description"></Thead>
-              <Thead name="play"></Thead>
+          <Table data={shuffle(artistsList.slice(0, 10))} displayHeader={false}>
+              <Thead name="name"></Thead>
               <Thead name="plus"></Thead>
-              <Column className="table-link table-icon" name="play"
-                value={() => (
-                  <a onClick={() => {}}>
-                    <i className="fa fa-play"></i>
-                  </a>
-                )}
-              />
               <Column className="table-link table-icon" name="plus"
                 value={() => (
                   <a onClick={() => {}}>
@@ -191,16 +134,13 @@ export default class Explore extends Component {
               </div>
             </div>
             <div className="columns">
-              <div className="column is-half">
+              <div className="column is-12">
                 {this._renderGenresBox()}
-              </div>
-              <div className="column is-half">
-                {this._renderTopMusics()}
               </div>
             </div>
             <div className="columns">
               <div className="column is-half">
-                {this._renderListsBox()}
+                {this._renderTopSongs()}
               </div>
               <div className="column is-half">
                 {this._renderArtistsBox()}

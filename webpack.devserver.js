@@ -18,6 +18,7 @@ app.use(require('webpack-hot-middleware')(compiler, {
 app.listen(4001, 'localhost', function (err) {
   if (err) return console.error(err);
   console.log('Webpack dev server running on localhost:4001');
+  console.log('bundling js ...');
 });
 
 // Exit on end of STDIN
