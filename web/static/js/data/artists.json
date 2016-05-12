@@ -1,42 +1,42 @@
 [
   {
-     "id":"1",
+     "id":1,
      "name":"Mettalica"
   },
   {
-     "id":"2",
+     "id":2,
      "name":"ACDC"
   },
   {
-     "id":"3",
+     "id":3,
      "name":"Iron Maiden"
   },
   {
-     "id":"4",
+     "id":4,
      "name":"Led Zeppelin"
   },
   {
-     "id":"5",
+     "id":5,
      "name":"Dire Straits"
   },
   {
-     "id":"6",
+     "id":6,
      "name":"Dio"
   },
   {
-     "id":"7",
+     "id":7,
      "name":"Legião Urbana"
   },
   {
-     "id":"8",
+     "id":8,
      "name":"Pearl Jam"
   },
   {
-     "id":"9",
+     "id":9,
      "name":"Megadeth"
   },
   {
-     "id":"10",
+     "id":10,
      "name":"Black Sabbath"
   }
 ]

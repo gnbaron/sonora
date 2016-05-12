@@ -28,22 +28,55 @@ const mapStateToProps = (state) => ({
 @connect(mapStateToProps)
 export default class Explore extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      genresList: props.genresList,
+      artistsList: props.artistsList,
+      songsList: props.songsList
+    };
+  }
+
   componentDidMount() {
     this.props.dispatch(application.setTitle('Explore'));
+  }
+
+  onSearch(event){
+    let value = event.target.value;
+    let { songsList, artistsList, genresList } = this.props;
+
+    let filteredSongs = songsList.filter(song => {
+      let artist = filterList(artistsList, song.artist_id);
+      let genre = filterList(genresList, song.genre_id);
+      return song.title.includes(value) ||
+        (artist && artist.name.includes(value)) ||
+          (genre && genre.title.includes(value));
+    });
+    let filteredArtists = artistsList.filter(artist => {
+      return artist.name.includes(value);
+    });
+    let filteredGenres = genresList.filter(genre => {
+      return genre.title.includes(value);
+    });
+    this.setState({
+      songsList: filteredSongs,
+      genresList: filteredGenres,
+      filteredArtists: filteredArtists
+    });
   }
 
   _renderSearchBox() {
     return (
       <div className="box">
         <div className="box-body">
-          <Search />
+          <Search onChange={::this.onSearch}/>
         </div>
       </div>
     )
   }
 
   _renderGenresBox() {
-    let { genresList } = this.props;
+    let { genresList } = this.state;
     let renderGenreCard = (genre) => {
       return (
         <div key={genre.id} className="column card music-card is-quarter" style={{ backgroundColor: genre.color }}>
@@ -68,7 +101,7 @@ export default class Explore extends Component {
   }
 
   _renderTopSongs() {
-    let { songsList } = this.props;
+    let { songsList } = this.state;
     return (
       <div className="box">
         <div className="box-body">
@@ -100,7 +133,7 @@ export default class Explore extends Component {
   }
 
   _renderArtistsBox() {
-    let { artistsList } = this.props;
+    let { artistsList } = this.state;
     return (
       <div className="box">
         <div className="box-body">
@@ -151,4 +184,8 @@ export default class Explore extends Component {
       </div>
     )
   }
+}
+
+let filterList = (list, id) => {
+  return list.filter(a => a.id == id)[0];
 }
