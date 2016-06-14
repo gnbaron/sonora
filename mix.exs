@@ -30,15 +30,16 @@ defmodule Sonora.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.4"},
+    [{:phoenix, "~> 1.1.6"},
      {:phoenix_ecto, "~> 3.0.0-rc.0"},
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.5"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:ecto, "~> 2.0.0-rc.4", override: true},
+     {:ecto, "~> 2.0.0-rc.5", override: true},
      {:cowboy, "~> 1.0"},
      {:ex_machina, "~> 0.6.1", only: :test},
-     {:guardian, "~> 0.10.1"}]
+     {:guardian, "~> 0.10.1"},
+     {:httpoison, "~> 0.8.3"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

@@ -33,7 +33,7 @@ defmodule Sonora.Router do
     scope "/secured" do
       pipe_through :secured
 
-      # resources that needs authentication
+      resources "/genres", GenreController, except: [:new, :edit]
 
     end
 

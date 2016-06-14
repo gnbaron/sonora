@@ -47,6 +47,7 @@ defmodule Sonora.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      import Sonora.ErrorHelpers
       import Sonora.Router.Helpers
     end
   end
