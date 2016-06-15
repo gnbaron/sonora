@@ -12,7 +12,7 @@ import { bindAsyncActionCreator } from '../utils';
 
 const mapStateToProps = (state) => ({
   currentUser: state.session.currentUser,
-  genresList: state.genres.data,
+  genresList: state.genres,
   songsList: state.songs.data,
   artistsList: state.artists.data
 });

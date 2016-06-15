@@ -18,10 +18,10 @@ export default function reducer(state = [], action = {}) {
       return state.filter((genre) => genre.id != action.genreId)
     case UPDATE:
       return state.map((genre) => {
-        if(genre.id == action.genre.id){
-          return genre;
-        } else {
+        if(genre.id === action.genre.id){
           return action.genre;
+        } else {
+          return genre;
         }
       })
     default:
@@ -46,7 +46,7 @@ export function save(data) {
     .then( newGenre => {
       dispatch({
         type: SAVE,
-        genre: newGenre
+        genre: newGenre.data
       })
     }).catch(parseJSONAndRethrow(dispatch))
   }
@@ -65,11 +65,11 @@ export function remove(id) {
 
 export function update(id, data) {
   return dispatch => {
-    return httpPut(`api/secured/genres/${id}`, data)
+    return httpPut(`api/secured/genres/${id}`, { 'genre': data })
     .then( updated => {
       dispatch({
         type: UPDATE,
-        genre: updated
+        genre: updated.data
       })
     }).catch(parseJSONAndRethrow(dispatch))
   }

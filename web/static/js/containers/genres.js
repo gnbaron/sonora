@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import { reduxForm, reset } from 'redux-form';
-import FormInput from '../../components/form/input';
-import { bindAsyncActionCreator} from '../../utils';
+import FormInput from '../components/form/input';
+import { bindAsyncActionCreator, parseJSONError} from '../utils';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-async-connect';
-import * as genres from '../../redux/modules/genres';
-import Table, { Thead, Column } from '../../components/table';
-import Modal, { ModalHeader } from '../../components/modal';
-import LoadingIndicator from '../../components/loading-indicator';
+import * as genres from '../redux/modules/genres';
+import * as application from '../redux/modules/application';
+import Table, { Thead, Column } from '../components/table';
+import Modal, { ModalHeader } from '../components/modal';
+import LoadingIndicator from '../components/loading-indicator';
 
 const mapStateToProps = (state) => ({
-  genres: state.genres.data
+  genresList: state.genres
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  delete: bindAsyncActionCreator(genres.delete, dispatch),
-  save: bindAsyncActionCreator(genres.save, dispatch)
+  setTitle: bindAsyncActionCreator(application.setTitle, dispatch),
+  remove: bindAsyncActionCreator(genres.remove, dispatch),
+  save: bindAsyncActionCreator(genres.save, dispatch),
+  update: bindAsyncActionCreator(genres.update, dispatch),
+  showError: bindAsyncActionCreator(application.showErrorMessage, dispatch)
 });
 
 @asyncConnect([{
-  promise: ({store: {dispatch}, location}) => {
-    if (location.pathname === 'genres/new') {
-      return null;
-    }
+  promise: ({store: {dispatch}}) => {
     return Promise.all([
       dispatch(genres.load())
     ]);
@@ -33,35 +33,38 @@ const mapDispatchToProps = (dispatch) => ({
 export default class GenresContainer extends Component {
 
   componentDidMount() {
-    if (this.props.location.pathname === '/genres') {
-      this.props.setTitle('Genres');
-    }
+    this.props.setTitle('Genres');
   }
 
-  // _delete(e, project) {
-  //   e.stopPropagation();
-  //   this.props.delete(project.id)
-  //     .catch(error => this.props.showError(parseJSONError(error)));
-  // }
+  _delete(e, data) {
+    e.stopPropagation();
+    this.props.remove(data.id)
+      .catch(error => this.props.showError(parseJSONError(error)));
+  }
+
+  _renderDetailRow(rowNum, row) {
+    return (
+      <GenreForm
+        form={`genreForm/${row.id}`}
+        initialValues={row}
+        action={this.props.update.bind(null, row.id)}
+        onSubmitOk={() => this.refs.genresTable.toggleDetails(rowNum)}
+      />
+    )
+  }
 
   _renderTable(){
     let { genresList } = this.props;
     return (
       <Table ref='genresTable'
-        className='genres-table'
+        renderDetailRow={::this._renderDetailRow}
         data={ genresList }
         noDataMessage='No data found.'>
           <Thead name="id">Id</Thead>
           <Thead name="description">Description</Thead>
+          <Thead name="delete"/>
 
-          <Column className="is-link" name="edit"
-            value={(_, item) => (
-              <Link to={'genres/' + item.id} onClick={e => e.stopPropagation()}>
-                <i className="fa fa-pencil"></i>
-              </Link>
-            )}
-          />
-          <Column className="is-link" name="delete"
+          <Column className="table-link table-icon" name="delete"
             value={(_, item) =>
               <a onClick={e => this._delete(e, item)}>
                 <i className="fa fa-trash"></i>
@@ -82,7 +85,7 @@ export default class GenresContainer extends Component {
     return (
       <div>
         {this.props.children ||
-          <div id="project-index" className="page has-menu">
+          <div className="page has-menu">
             <div className="page-menu">
               <div className="container">
                 <a onClick={::this._toogleModal} className="button is-secondary">
@@ -94,9 +97,11 @@ export default class GenresContainer extends Component {
               </div>
               <Modal ref="genreModal">
                 <ModalHeader>
-                  <p>Genres Register</p>
+                  <p>Genre</p>
                 </ModalHeader>
-                <Form form="genreNew"
+                <GenreForm
+                  form="genreNew"
+                  action={this.props.save}
                   onSubmitOk={() => this.refs.genreModal.closeModal()}
                 />
               </Modal>
@@ -105,7 +110,7 @@ export default class GenresContainer extends Component {
             <div className="page-content">
               <div className="container">
                 <div className="box">
-                  {this._renderTable()}
+                  {::this._renderTable()}
                 </div>
               </div>
             </div>
@@ -117,12 +122,13 @@ export default class GenresContainer extends Component {
 }
 
 @reduxForm(
-{ fields: ['description'] }, null, mapDispatchToProps)
-class Form extends Component {
+  { fields: ['description'] }
+)
+export class GenreForm extends Component {
 
   onSubmit(data) {
-    let { save, onSubmitOk } = this.props;
-    return save(data).then(onSubmitOk);
+    let { action, onSubmitOk } = this.props;
+    return action(data).then(onSubmitOk);
   }
 
   render() {
@@ -137,12 +143,14 @@ class Form extends Component {
 
     return (
       <LoadingIndicator loading={submitting}>
-        <form className="project-form" onSubmit={handleSubmit(::this.onSubmit)}>
+        <form onSubmit={handleSubmit(::this.onSubmit)}>
           <div className="columns">
-            <FormInput field={description} groupClass="control">
-              <label className="label">Descrição</label>
-              <input type="text" className="input" {... description}></input>
-            </FormInput>
+            <div className="control column is-12">
+              <FormInput field={description} groupClass="control">
+                <label className="label">Description</label>
+                <input type="text" className="input" {... description}></input>
+              </FormInput>
+            </div>
           </div>
           <div className="control">
             <button type="submit" className="button is-pulled-right is-primary">Salvar</button>
