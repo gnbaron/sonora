@@ -19,6 +19,7 @@
         "_left-nav.scss",
         "_loading-indicator.scss",
         "_login.scss",
+        "_modal.scss",
         "_notification.scss",
         "_overlay.scss",
         "_player.scss",

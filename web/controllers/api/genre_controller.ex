@@ -3,8 +3,6 @@ defmodule Sonora.GenreController do
 
   alias Sonora.Genre
 
-  plug :scrub_params, "genre" when action in [:create, :update]
-
   def index(conn, _params) do
     genres = Repo.all(Genre)
     render(conn, "index.json", genres: genres)

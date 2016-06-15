@@ -62,19 +62,8 @@ class LeftNav extends Component {
           <MenuLink to="/artists" iconClass="fa fa-microphone" onMenuChange={::this.forceUpdate}>
             <span>Artists</span>
           </MenuLink>
-          <MenuLink to="/profile" iconClass="fa fa-user" onMenuChange={::this.forceUpdate}>
-            <span>Profile</span>
-          </MenuLink>
-
-          <li className="menu-header">Cadastro</li>
-          <MenuLink to="/explore" iconClass="fa fa-home" onMenuChange={::this.forceUpdate}>
-            <span>Explore</span>
-          </MenuLink>
-          <MenuLink to="/songs" iconClass="fa fa-music" onMenuChange={::this.forceUpdate}>
-            <span>Songs</span>
-          </MenuLink>
-          <MenuLink to="/artists" iconClass="fa fa-microphone" onMenuChange={::this.forceUpdate}>
-            <span>Artists</span>
+          <MenuLink to="/genres" iconClass="fa fa-book" onMenuChange={::this.forceUpdate}>
+            <span>Genres</span>
           </MenuLink>
           <MenuLink to="/profile" iconClass="fa fa-user" onMenuChange={::this.forceUpdate}>
             <span>Profile</span>
