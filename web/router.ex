@@ -33,6 +33,10 @@ defmodule Sonora.Router do
     scope "/secured" do
       pipe_through :secured
 
+      scope "/users" do
+        post "/:user_id", UserController, :update
+      end
+
       resources "/genres", GenreController, except: [:new, :edit]
 
     end

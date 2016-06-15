@@ -4,6 +4,7 @@ defmodule Sonora.User do
   alias Sonora.{Repo, User}
 
   @valid_email_format ~r/\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/
+  @derive {Poison.Encoder, only: [:id, :name, :email]}
 
   schema "users" do
     field :name, :string
