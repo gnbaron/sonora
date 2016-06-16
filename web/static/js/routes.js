@@ -9,6 +9,7 @@ import Songs from './containers/songs';
 import Artists from './containers/artists';
 import Profile from './containers/profile';
 import Genres from './containers/genres';
+import Playlist from './containers/playlist';
 
 export default (
   <div>
@@ -18,6 +19,7 @@ export default (
     <Route path="/" component={AuthenticatedContainer}>
       <IndexRoute component={Home} />
       <Route path="/explore" component={Explore}/>
+      <Route path="/playlist" component={Playlist}/>
       <Route path="/songs" component={Songs}/>
       <Route path="/artists" component={Artists}/>
       <Route path="/genres" component={Genres}/>

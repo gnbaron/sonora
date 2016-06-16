@@ -8,6 +8,7 @@ import * as songs from '../redux/modules/songs';
 import * as artists from '../redux/modules/artists';
 import * as genres from '../redux/modules/genres';
 import * as application from '../redux/modules/application';
+import * as playlist from '../redux/modules/playlist';
 import Table, { Thead, Column } from '../components/table';
 import Modal, { ModalHeader } from '../components/modal';
 import LoadingIndicator from '../components/loading-indicator';
@@ -24,7 +25,9 @@ const mapDispatchToProps = (dispatch) => ({
   remove: bindAsyncActionCreator(songs.remove, dispatch),
   save: bindAsyncActionCreator(songs.save, dispatch),
   update: bindAsyncActionCreator(songs.update, dispatch),
-  showError: bindAsyncActionCreator(application.showErrorMessage, dispatch)
+  showError: bindAsyncActionCreator(application.showErrorMessage, dispatch),
+  addSong: bindAsyncActionCreator(playlist.addSong, dispatch),
+  removeSong: bindAsyncActionCreator(playlist.removeSong, dispatch)
 });
 
 @asyncConnect([{
@@ -49,6 +52,11 @@ export default class SongContainer extends Component {
       .catch(error => this.props.showError(parseJSONError(error)));
   }
 
+  _addPlaylist(e, data) {
+    e.stopPropagation();
+    this.props.addSong(data);
+  }
+
   _renderDetailRow(rowNum, row) {
     return (
       <SongForm
@@ -71,14 +79,8 @@ export default class SongContainer extends Component {
           <Thead name="artist_id">Artist</Thead>
           <Thead name="genre_id">Genre</Thead>
           <Thead name="delete"/>
+          <Thead name="add"/>
 
-          <Column className="table-link table-icon" name="delete"
-            value={(_, item) =>
-              <a onClick={e => this._delete(e, item)}>
-                <i className="fa fa-trash"></i>
-              </a>
-            }
-          />
           <Column name="artist_id" value={artist_id => {
             if (artist_id) {
               return filterList(artistsList, artist_id).name;
@@ -92,6 +94,20 @@ export default class SongContainer extends Component {
             return '';
           }} />
 
+          <Column className="table-link table-icon" name="delete"
+            value={(_, item) =>
+              <a onClick={e => this._delete(e, item)}>
+                <i className="fa fa-trash"></i>
+              </a>
+            }
+          />
+          <Column className="table-link table-icon" name="add"
+            value={(_, item) =>
+              <a onClick={e => this._addPlaylist(e, item)}>
+                <i className="fa fa-plus"></i>
+              </a>
+            }
+          />
       </Table>
     )
   }
