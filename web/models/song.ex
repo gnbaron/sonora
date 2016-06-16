@@ -4,13 +4,14 @@ defmodule Sonora.Song do
   schema "songs" do
     field :title, :string
     field :plays, :integer
+    field :url, :string
     belongs_to :artist, Sonora.Artist
     belongs_to :genre, Sonora.Genre
 
     timestamps
   end
 
-  @required_fields ~w(title artist_id genre_id)
+  @required_fields ~w(title url artist_id genre_id)
   @optional_fields ~w(plays)
 
   @doc """

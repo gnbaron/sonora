@@ -2,7 +2,7 @@ defmodule Sonora.SongControllerTest do
   use Sonora.ConnCase
 
   alias Sonora.Song
-  @valid_attrs %{title: "some content", plays: 0}
+  @valid_attrs %{title: "some content", plays: 0, url: "http://www.test.com.br/test.mp3"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -23,7 +23,9 @@ defmodule Sonora.SongControllerTest do
       "title" => song.title,
       "plays" => 0,
       "artist_id" => song.artist_id,
-      "genre_id" => song.genre_id}
+      "genre_id" => song.genre_id,
+      "url" => song.url
+    }
   end
 
   @tag :logged_in
@@ -31,27 +33,6 @@ defmodule Sonora.SongControllerTest do
     assert_error_sent 404, fn ->
       get conn, song_path(conn, :show, -1)
     end
-  end
-
-  @tag :logged_in
-  test "creates and renders resource when data is valid", %{conn: conn} do
-    conn = post conn, song_path(conn, :create), song: @valid_attrs
-    assert json_response(conn, 201)["data"]["id"]
-    assert Repo.get_by(Song, @valid_attrs)
-  end
-
-  @tag :logged_in
-  test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, song_path(conn, :create), song: @invalid_attrs
-    assert json_response(conn, 422)["errors"] != %{}
-  end
-
-  @tag :logged_in
-  test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    song = Repo.insert! %Song{}
-    conn = put conn, song_path(conn, :update, song), song: @valid_attrs
-    assert json_response(conn, 200)["data"]["id"]
-    assert Repo.get_by(Song, @valid_attrs)
   end
 
   @tag :logged_in

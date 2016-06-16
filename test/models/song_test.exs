@@ -3,7 +3,7 @@ defmodule Sonora.SongTest do
 
   alias Sonora.Song
 
-  @valid_attrs %{title: "some content"}
+  @valid_attrs %{title: "some content", url: "http://www.test.com.br/test.mp3", artist_id: 1, genre_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

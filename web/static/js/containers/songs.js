@@ -147,7 +147,7 @@ let filterList = (list, id) => {
 }
 
 @reduxForm(
-  { fields: ['title', 'artist_id', 'genre_id'] }
+  { fields: ['title', 'artist_id', 'genre_id', 'url'] }
 )
 @connect(mapStateToProps, mapDispatchToProps)
 export class SongForm extends Component {
@@ -203,7 +203,8 @@ export class SongForm extends Component {
       fields: {
         title,
         artist_id,
-        genre_id
+        genre_id,
+        url
       }
     } = this.props;
 
@@ -227,6 +228,14 @@ export class SongForm extends Component {
             <div className="control column is-6">
               <FormInput field={genre_id} label="Genre" groupClass="control column">
                 { this.renderGenreOptions() }
+              </FormInput>
+            </div>
+          </div>
+          <div className="columns">
+            <div className="control column is-12">
+              <FormInput field={url} groupClass="control">
+                <label className="label">URL</label>
+                <input type="text" className="input" {... url}></input>
               </FormInput>
             </div>
           </div>

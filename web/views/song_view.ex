@@ -14,6 +14,7 @@ defmodule Sonora.SongView do
       id: song.id,
       title: song.title,
       plays: song.plays,
+      url: song.url,
       artist_id: song.artist_id,
       genre_id: song.genre_id
     }
