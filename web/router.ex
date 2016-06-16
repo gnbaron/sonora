@@ -39,6 +39,7 @@ defmodule Sonora.Router do
 
       resources "/genres", GenreController, except: [:new, :edit]
       resources "/artists", ArtistController, except: [:new, :edit]
+      resources "/songs", SongController, except: [:new, :edit]
 
     end
 

@@ -1,15 +1,15 @@
-defmodule Sonora.Artist do
+defmodule Sonora.Song do
   use Sonora.Web, :model
 
-  schema "artists" do
-    field :name, :string
-
-    has_many :songs, Sonora.Song
+  schema "songs" do
+    field :title, :string
+    belongs_to :artist, Sonora.Artist
+    belongs_to :genre, Sonora.Genre
 
     timestamps
   end
 
-  @required_fields ~w(name)
+  @required_fields ~w(title)
   @optional_fields ~w()
 
   @doc """

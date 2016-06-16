@@ -4,6 +4,8 @@ defmodule Sonora.Genre do
   schema "genres" do
     field :description, :string
 
+    has_many :songs, Sonora.Song
+
     timestamps
   end
 
