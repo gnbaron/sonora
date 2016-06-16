@@ -5,13 +5,16 @@ import { bindAsyncActionCreator, parseJSONError} from '../utils';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-async-connect';
 import * as genres from '../redux/modules/genres';
+import * as songs from '../redux/modules/artists';
+import * as playlist from '../redux/modules/playlist';
 import * as application from '../redux/modules/application';
 import Table, { Thead, Column } from '../components/table';
 import Modal, { ModalHeader } from '../components/modal';
 import LoadingIndicator from '../components/loading-indicator';
 
 const mapStateToProps = (state) => ({
-  genresList: state.genres
+  genresList: state.genres,
+  songsList: state.songs
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -19,13 +22,15 @@ const mapDispatchToProps = (dispatch) => ({
   remove: bindAsyncActionCreator(genres.remove, dispatch),
   save: bindAsyncActionCreator(genres.save, dispatch),
   update: bindAsyncActionCreator(genres.update, dispatch),
-  showError: bindAsyncActionCreator(application.showErrorMessage, dispatch)
+  showError: bindAsyncActionCreator(application.showErrorMessage, dispatch),
+  addSong: bindAsyncActionCreator(playlist.addSong, dispatch)
 });
 
 @asyncConnect([{
   promise: ({store: {dispatch}}) => {
     return Promise.all([
-      dispatch(genres.load())
+      dispatch(genres.load()),
+      dispatch(songs.load())
     ]);
   }
 }])
@@ -53,6 +58,13 @@ export default class GenresContainer extends Component {
     )
   }
 
+  _addGenre(e, genre) {
+    e.stopPropagation();
+    let { songsList, addSong } = this.props;
+    songsList.filter(song => song.genre_id === genre.id)
+      .forEach(song => addSong(song))
+  }
+
   _renderTable(){
     let { genresList } = this.props;
     return (
@@ -63,11 +75,19 @@ export default class GenresContainer extends Component {
           <Thead name="id">Id</Thead>
           <Thead name="description">Description</Thead>
           <Thead name="delete"/>
+          <Thead name="add"/>
 
           <Column className="table-link table-icon" name="delete"
             value={(_, item) =>
               <a onClick={e => this._delete(e, item)}>
                 <i className="fa fa-trash"></i>
+              </a>
+            }
+          />
+          <Column className="table-link table-icon" name="add"
+            value={(_, item) =>
+              <a onClick={e => ::this._addGenre(e, item)}>
+                <i className="fa fa-plus"></i>
               </a>
             }
           />

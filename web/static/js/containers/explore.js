@@ -5,9 +5,9 @@ import * as application from '../redux/modules/application';
 import * as genres from '../redux/modules/genres';
 import * as songs from '../redux/modules/songs';
 import * as artists from '../redux/modules/artists';
+import * as playlist from '../redux/modules/playlist';
 import Search from '../components/search';
 import Table, { Thead, Column } from '../components/table';
-import shuffle from 'shuffle-array';
 import { bindAsyncActionCreator } from '../utils';
 
 const mapStateToProps = (state) => ({
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  play: bindAsyncActionCreator(application.play, dispatch)
+  addSong: bindAsyncActionCreator(playlist.addSong, dispatch)
 });
 
 @asyncConnect([
@@ -80,19 +80,24 @@ export default class Explore extends Component {
     )
   }
 
+  _addGenre(e, genre) {
+    e.stopPropagation();
+    let { songsList, addSong } = this.props;
+    songsList.filter(song => song.genre_id === genre.id)
+      .forEach(song => addSong(song))
+  }
+
   _renderGenresBox() {
     let { genresList } = this.state;
-    let { play } = this.props;
-    let playSong = () => this.props.dispatch(play);
     let renderGenreCard = (genre) => {
       return (
         <div key={genre.id}
           className="column card music-card is-quarter"
-          style={{ backgroundColor: genre.color }}
-          onClick={() => playSong()}>
+          style={{ backgroundColor: getRGB(genre.description) }}
+          onClick={e => this._addGenre(e, genre)}>
 
           <div className="card-content">
-            {genre.title} <span className="fa fa-music genre-symbol" />
+            {genre.description} <span className="fa fa-music genre-symbol" />
           </div>
         </div>
       )
@@ -111,25 +116,28 @@ export default class Explore extends Component {
     )
   }
 
+  _addSong(e, data) {
+    e.stopPropagation();
+    this.props.addSong(data);
+  }
+
   _renderTopSongs() {
     let { songsList } = this.state;
-    let { play } = this.props;
-    let playSong = () => this.props.dispatch(play);
     return (
       <div className="box">
         <div className="box-body">
           <div className="box-header">
             <span className="box-title">Songs</span>
           </div>
-          <Table data={shuffle(songsList.slice(0, 10))} displayHeader={false}>
+          <Table data={songsList.slice(0, 10)} displayHeader={false}>
               <Thead name="title"></Thead>
-              <Thead name="play"></Thead>
-              <Column className="table-link table-icon" name="play"
-                value={() => (
-                  <a onClick={() => playSong()}>
-                    <i className="fa fa-play"></i>
+              <Thead name="add"></Thead>
+              <Column className="table-link table-icon" name="add"
+                value={(_, item) =>
+                  <a onClick={e => this._addSong(e, item)}>
+                    <i className="fa fa-plus"></i>
                   </a>
-                )}
+                }
               />
           </Table>
         </div>
@@ -137,25 +145,30 @@ export default class Explore extends Component {
     )
   }
 
+  _addArtist(e, data) {
+    e.stopPropagation();
+    let { songsList, addSong } = this.props;
+    songsList.filter(song => song.artist_id === data.id)
+      .forEach(song => addSong(song))
+  }
+
   _renderArtistsBox() {
     let { artistsList } = this.state;
-    let { play } = this.props;
-    let playSong = () => this.props.dispatch(play);
     return (
       <div className="box">
         <div className="box-body">
           <div className="box-header">
             <span className="box-title">Artists</span>
           </div>
-          <Table data={shuffle(artistsList.slice(0, 10))} displayHeader={false}>
+          <Table data={artistsList.slice(0, 10)} displayHeader={false}>
               <Thead name="name"></Thead>
-              <Thead name="play"></Thead>
-              <Column className="table-link table-icon" name="play"
-                value={() => (
-                  <a onClick={() => playSong()}>
-                    <i className="fa fa-play"></i>
+              <Thead name="add"></Thead>
+              <Column className="table-link table-icon" name="add"
+                value={(_, item) =>
+                  <a onClick={e => this._addArtist(e, item)}>
+                    <i className="fa fa-plus"></i>
                   </a>
-                )}
+                }
               />
           </Table>
         </div>
@@ -191,6 +204,26 @@ export default class Explore extends Component {
       </div>
     )
   }
+}
+
+let getRGB = (seed) => {
+  return '#' + intToRGB(hashCode(seed));
+}
+
+let hashCode = (str) => {
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+     hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+}
+
+let intToRGB = (i) => {
+  var c = (i & 0x00FFFFFF)
+      .toString(16)
+      .toUpperCase();
+
+  return '00000'.substring(0, 6 - c.length) + c;
 }
 
 let filterList = (list, id) => {
