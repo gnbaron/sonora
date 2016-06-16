@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
   currentUser: state.session.currentUser,
   genresList: state.genres,
   songsList: state.songs.data,
-  artistsList: state.artists.data
+  artistsList: state.artists
 });
 
 const mapDispatchToProps = dispatch => ({

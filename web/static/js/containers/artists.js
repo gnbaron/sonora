@@ -1,105 +1,164 @@
 import React, { Component } from 'react';
+import { reduxForm, reset } from 'redux-form';
+import FormInput from '../components/form/input';
+import { bindAsyncActionCreator, parseJSONError} from '../utils';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-async-connect';
-import * as application from '../redux/modules/application';
 import * as artists from '../redux/modules/artists';
-import Search from '../components/search';
+import * as application from '../redux/modules/application';
 import Table, { Thead, Column } from '../components/table';
-import { bindAsyncActionCreator } from '../utils';
+import Modal, { ModalHeader } from '../components/modal';
+import LoadingIndicator from '../components/loading-indicator';
 
 const mapStateToProps = (state) => ({
-  currentUser: state.session.currentUser,
-  artistsList: state.artists.data
+  artistsList: state.artists
 });
 
-const mapDispatchToProps = dispatch => ({
-  play: bindAsyncActionCreator(application.play, dispatch)
+const mapDispatchToProps = (dispatch) => ({
+  setTitle: bindAsyncActionCreator(application.setTitle, dispatch),
+  remove: bindAsyncActionCreator(artists.remove, dispatch),
+  save: bindAsyncActionCreator(artists.save, dispatch),
+  update: bindAsyncActionCreator(artists.update, dispatch),
+  showError: bindAsyncActionCreator(application.showErrorMessage, dispatch)
 });
 
-@asyncConnect([
-  { promise: ({store: {dispatch}}) =>
-    Promise.all([
+@asyncConnect([{
+  promise: ({store: {dispatch}}) => {
+    return Promise.all([
       dispatch(artists.load())
-    ])
+    ]);
   }
-])
+}])
 @connect(mapStateToProps, mapDispatchToProps)
-export default class Songs extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      artistsList: props.artistsList
-    };
-  }
+export default class ArtistContainer extends Component {
 
   componentDidMount() {
-    this.props.dispatch(application.setTitle('Artists'));
+    this.props.setTitle('Artists');
   }
 
-  onSearch(event){
-    let value = event.target.value;
+  _delete(e, data) {
+    e.stopPropagation();
+    this.props.remove(data.id)
+      .catch(error => this.props.showError(parseJSONError(error)));
+  }
+
+  _renderDetailRow(rowNum, row) {
+    return (
+      <ArtistForm
+        form={`artistForm/${row.id}`}
+        initialValues={row}
+        action={this.props.update.bind(null, row.id)}
+        onSubmitOk={() => this.refs.artistsTable.toggleDetails(rowNum)}
+      />
+    )
+  }
+
+  _renderTable(){
     let { artistsList } = this.props;
-    let filtered = artistsList.filter(artist => {
-      return artist && artist.name.toUpperCase().includes(value.toUpperCase());
-    });
-    this.setState({ artistsList: filtered });
-  }
-
-  _renderSearchBox() {
     return (
-      <div className="box">
-        <div className="box-body">
-          <Search placeholder="Search artists ..." onChange={::this.onSearch}/>
-        </div>
-      </div>
+      <Table ref='artistsTable'
+        renderDetailRow={::this._renderDetailRow}
+        data={ artistsList }
+        noDataMessage='No data found.'>
+          <Thead name="id">Id</Thead>
+          <Thead name="name">Name</Thead>
+          <Thead name="delete"/>
+
+          <Column className="table-link table-icon" name="delete"
+            value={(_, item) =>
+              <a onClick={e => this._delete(e, item)}>
+                <i className="fa fa-trash"></i>
+              </a>
+            }
+          />
+      </Table>
     )
   }
 
-  _renderArtistsBox() {
-    let { artistsList = [] } = this.state;
-    let { play } = this.props;
-    let playSong = () => this.props.dispatch(play);
-    return (
-      <div className="box">
-        <div className="box-body">
-          <div className="box-header">
-            <span className="box-title">Artists</span>
-          </div>
-          <Table data={artistsList}>
-              <Thead name="name">Name</Thead>
-              <Thead name="play"></Thead>
-              <Column className="table-link table-icon" name="play"
-                value={() => (
-                  <a onClick={() => playSong()}>
-                    <i className="fa fa-play"></i>
-                  </a>
-                )}
-              />
-          </Table>
-        </div>
-      </div>
-    )
+  _toogleModal() {
+    this.props.dispatch(reset('artistNew'));
+    this.refs.artistModal.toggleModal();
   }
 
   render() {
+
     return (
-      <div className="page">
-        <div className="page-content">
-          <div className="app-container is-big">
-            <div className="columns">
-              <div className="column is-12">
-                {this._renderSearchBox()}
+      <div>
+        {this.props.children ||
+          <div className="page has-menu">
+            <div className="page-menu">
+              <div className="container">
+                <a onClick={::this._toogleModal} className="button is-secondary">
+                  <span className="icon">
+                    <i className="fa fa-microphone"></i>
+                  </span>
+                  Add Artist
+                </a>
               </div>
+              <Modal ref="artistModal">
+                <ModalHeader>
+                  <p>Artist</p>
+                </ModalHeader>
+                <ArtistForm
+                  form="artistNew"
+                  action={this.props.save}
+                  onSubmitOk={() => this.refs.artistModal.closeModal()}
+                />
+              </Modal>
             </div>
-            <div className="columns">
-              <div className="column is-10 is-offset-1">
-                {this._renderArtistsBox()}
+
+            <div className="page-content">
+              <div className="container">
+                <div className="box">
+                  {::this._renderTable()}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        }
       </div>
     )
   }
+}
+
+@reduxForm(
+  { fields: ['name'] }
+)
+export class ArtistForm extends Component {
+
+  onSubmit(data) {
+    let { action, onSubmitOk } = this.props;
+    return action(data).then(onSubmitOk);
+  }
+
+  render() {
+    let {
+      handleSubmit,
+      submitting,
+      onClose,
+      fields: {
+        name
+      }
+    } = this.props;
+
+    return (
+      <LoadingIndicator loading={submitting}>
+        <form onSubmit={handleSubmit(::this.onSubmit)}>
+          <div className="columns">
+            <div className="control column is-12">
+              <FormInput field={name} groupClass="control">
+                <label className="label">Name</label>
+                <input type="text" className="input" {... name}></input>
+              </FormInput>
+            </div>
+          </div>
+          <div className="control">
+            <button type="submit" className="button is-pulled-right is-primary">Save</button>
+            <a className="button is-pulled-right" onClick={onClose}>Cancel</a>
+          </div>
+        </form>
+      </LoadingIndicator>
+    )
+  }
+
 }

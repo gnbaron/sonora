@@ -153,8 +153,8 @@ export class GenreForm extends Component {
             </div>
           </div>
           <div className="control">
-            <button type="submit" className="button is-pulled-right is-primary">Salvar</button>
-            <a className="button is-pulled-right" onClick={onClose}>Cancelar</a>
+            <button type="submit" className="button is-pulled-right is-primary">Save</button>
+            <a className="button is-pulled-right" onClick={onClose}>Cancel</a>
           </div>
         </form>
       </LoadingIndicator>
