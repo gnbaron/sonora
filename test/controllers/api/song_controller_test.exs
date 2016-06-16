@@ -2,7 +2,7 @@ defmodule Sonora.SongControllerTest do
   use Sonora.ConnCase
 
   alias Sonora.Song
-  @valid_attrs %{title: "some content"}
+  @valid_attrs %{title: "some content", plays: 0}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -21,6 +21,7 @@ defmodule Sonora.SongControllerTest do
     conn = get conn, song_path(conn, :show, song)
     assert json_response(conn, 200)["data"] == %{"id" => song.id,
       "title" => song.title,
+      "plays" => 0,
       "artist_id" => song.artist_id,
       "genre_id" => song.genre_id}
   end

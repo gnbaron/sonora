@@ -1,0 +1,18 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - select module
+// styles for the select module
+
+// REACT SELECT STYLE
+.Select {
+  &.is-danger {
+    > .Select-control {
+      border-color: $danger;
+      color: $danger;
+    }
+  }
+}
+
+.Select-control {
+  @extend .input;
+  padding: 0px;
+}

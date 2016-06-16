@@ -11,12 +11,19 @@
 // add css frameworks and libraries here.
 // be sure to load them after the variable overrides file
 // if you want to change variable values.
+
+//React-select
+@import '../../../node_modules/react-select/scss/select';
+
 //BULMA.io
 @import '../../../node_modules/bulma/bulma/utilities/utilities';
 @import '../../../node_modules/bulma/bulma/config/variables';
 
 // - - variable overrides for sass libraries
 @import 'libs/library-variable-overrides';
+
+//React-select
+@import '../../../node_modules/react-select/scss/components';
 
 //BULMA.io
 @import '../../../node_modules/bulma/bulma/config/generated-variables';

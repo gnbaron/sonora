@@ -95,6 +95,7 @@
     "react-redux": "^4.4.0",
     "react-router": "^2.4.0",
     "react-router-redux": "^4.0.4",
+    "react-select": "^1.0.0-beta13",
     "reactable": "^0.12.4",
     "redux": "^3.3.1",
     "redux-async-connect": "^1.0.0-rc4",

@@ -3,14 +3,15 @@ defmodule Sonora.Song do
 
   schema "songs" do
     field :title, :string
+    field :plays, :integer
     belongs_to :artist, Sonora.Artist
     belongs_to :genre, Sonora.Genre
 
     timestamps
   end
 
-  @required_fields ~w(title)
-  @optional_fields ~w()
+  @required_fields ~w(title artist_id genre_id)
+  @optional_fields ~w(plays)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

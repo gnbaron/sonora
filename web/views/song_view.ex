@@ -10,9 +10,12 @@ defmodule Sonora.SongView do
   end
 
   def render("song.json", %{song: song}) do
-    %{id: song.id,
+    %{
+      id: song.id,
       title: song.title,
+      plays: song.plays,
       artist_id: song.artist_id,
-      genre_id: song.genre_id}
+      genre_id: song.genre_id
+    }
   end
 end

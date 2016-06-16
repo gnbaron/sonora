@@ -4,6 +4,7 @@ defmodule Sonora.Repo.Migrations.CreateSong do
   def change do
     create table(:songs) do
       add :title, :string
+      add :plays, :integer, default: 0
       add :artist_id, references(:artists, on_delete: :nothing)
       add :genre_id, references(:genres, on_delete: :nothing)
 

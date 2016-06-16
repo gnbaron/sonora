@@ -25,6 +25,7 @@
         "_player.scss",
         "_popper.scss",
         "_search.scss",
+        "_select.scss",
         "_switch.scss",
         "_table.scss",
         "_title.scss"
