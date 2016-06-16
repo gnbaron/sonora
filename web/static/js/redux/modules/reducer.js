@@ -7,6 +7,7 @@ import application from './application';
 import genres from './genres';
 import songs from './songs';
 import artists from './artists';
+import playlist from './playlist';
 
 export default combineReducers({
   reduxAsyncConnect,
@@ -16,5 +17,6 @@ export default combineReducers({
   application,
   genres,
   songs,
-  artists
+  artists,
+  playlist
 });
