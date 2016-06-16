@@ -237,16 +237,12 @@ export class SongForm extends Component {
             </div>
           </div>
           <div className="columns">
-            <div className="control column is-6">
-              <FormInput field={artist_id} label="Artist" groupClass="control column">
-                { this.renderArtistOptions() }
-              </FormInput>
-            </div>
-            <div className="control column is-6">
-              <FormInput field={genre_id} label="Genre" groupClass="control column">
-                { this.renderGenreOptions() }
-              </FormInput>
-            </div>
+            <FormInput field={artist_id} label="Artist" groupClass="control column is-6">
+              { this.renderArtistOptions() }
+            </FormInput>
+            <FormInput field={genre_id} label="Genre" groupClass="control column is-6">
+              { this.renderGenreOptions() }
+            </FormInput>
           </div>
           <div className="columns">
             <div className="control column is-12">
