@@ -8,8 +8,7 @@ import HeaderContainer from '../containers/header';
 import { TokenManager } from '../utils';
 import FlashNotificationContainer from './flash-notification';
 import LoadingIndicator from '../components/loading-indicator';
-import MusicPlayer from '../components/music-player';
-import songs from '../data/audio.json';
+import Player from '../containers/player';
 
 class AuthenticatedContainer extends Component {
   componentDidMount() {
@@ -36,10 +35,10 @@ class AuthenticatedContainer extends Component {
   }
 
   renderPLayer() {
-    let { playerActive } = this.props;
-    if(playerActive){
+    let { songs } = this.props;
+    if(songs && songs.length > 0){
       return (
-        <MusicPlayer songs={songs} autoplay={true} />
+        <Player autoplay={true} />
       )
     } else {
       return false;
@@ -93,7 +92,8 @@ const mapStateToProps = (state) => ({
   leftNavOpen: state.application.leftNavOpen,
   isLoading: state.application.isLoading,
   isMobileDevice: state.application.enviroment.isMobileDevice,
-  playerActive: state.application.playerActive
+  playerActive: state.application.playerActive,
+  songs: state.playlist
 });
 
 export default connect(mapStateToProps)(AuthenticatedContainer);

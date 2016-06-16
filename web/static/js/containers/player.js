@@ -1,8 +1,28 @@
 import React, { Component, PropTypes } from 'react';
+import { bindAsyncActionCreator} from '../utils';
+import { connect } from 'react-redux';
+import * as playlist from '../redux/modules/playlist';
 import classnames from 'classnames';
 import shuffle from 'shuffle-array';
 
-class MusicPlayer extends Component {
+const mapStateToProps = (state) => ({
+  songs: state.playlist,
+  artistsList: state.artists,
+  genresList: state.genres
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  removeSong: bindAsyncActionCreator(playlist.removeSong, dispatch)
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
+class PlayerContainer extends Component {
+
+  _delete(e, data) {
+    e.stopPropagation();
+    this.props.removeSong(data);
+  }
+
   state = {
     active: this.props.songs[0],
     current: 0,
@@ -105,6 +125,12 @@ class MusicPlayer extends Component {
     this.refs.player.volume = (mute) ? 1 : 0;
   }
 
+  renderArtistInfo() {
+    const { active } = this.state;
+    let { artistsList } = this.props;
+    return filterList(artistsList, active.artist_id).name;
+  }
+
   render () {
 
     const { active, play, progress } = this.state;
@@ -120,8 +146,8 @@ class MusicPlayer extends Component {
         <audio src={active.url} autoPlay={this.state.play} preload="auto" ref="player"></audio>
 
         <div className="artist-info">
-          <h2 className="artist-name">{active.artist.name}</h2>
-          <h3 className="artist-song-name">{active.artist.song}</h3>
+          <h2 className="artist-name">{::this.renderArtistInfo}</h2>
+          <h3 className="artist-song-name">{active.title}</h3>
         </div>
 
         <div className="player-progress-container" onClick={this.setProgress}>
@@ -163,9 +189,12 @@ class MusicPlayer extends Component {
   }
 }
 
-MusicPlayer.propTypes = {
-  autoplay: PropTypes.bool,
-  songs: PropTypes.array.isRequired
+let filterList = (list, id) => {
+  return list.filter(a => a.id == id)[0];
+}
+
+PlayerContainer.propTypes = {
+  autoplay: PropTypes.bool
 };
 
-export default MusicPlayer;
+export default PlayerContainer;

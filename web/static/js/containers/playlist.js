@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch) => ({
   }
 }])
 @connect(mapStateToProps, mapDispatchToProps)
-export default class SongContainer extends Component {
+export default class PlaylistContainer extends Component {
 
   componentDidMount() {
     this.props.setTitle('Playlist');
