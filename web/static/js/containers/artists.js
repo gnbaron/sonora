@@ -122,6 +122,7 @@ export default class ArtistContainer extends Component {
                 <ArtistForm
                   form="artistNew"
                   action={this.props.save}
+                  onClose={() => this.refs.artistModal.closeModal()}
                   onSubmitOk={() => this.refs.artistModal.closeModal()}
                 />
               </Modal>

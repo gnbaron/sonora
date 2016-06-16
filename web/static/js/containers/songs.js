@@ -139,6 +139,7 @@ export default class SongContainer extends Component {
                 <SongForm
                   form="songNew"
                   action={this.props.save}
+                  onClose={() => this.refs.songModal.closeModal()}
                   onSubmitOk={() => this.refs.songModal.closeModal()}
                 />
               </Modal>

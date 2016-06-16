@@ -122,6 +122,7 @@ export default class GenresContainer extends Component {
                 <GenreForm
                   form="genreNew"
                   action={this.props.save}
+                  onClose={() => this.refs.genreModal.closeModal()}
                   onSubmitOk={() => this.refs.genreModal.closeModal()}
                 />
               </Modal>
