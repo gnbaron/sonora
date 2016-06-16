@@ -55,18 +55,18 @@ export default class Explore extends Component {
       let genre = filterList(genresList, song.genre_id);
       return song.title.toUpperCase().includes(value.toUpperCase()) ||
         (artist && artist.name.toUpperCase().includes(value.toUpperCase())) ||
-          (genre && genre.title.toUpperCase().includes(value.toUpperCase()));
+          (genre && genre.description.toUpperCase().includes(value.toUpperCase()));
     });
     let filteredArtists = artistsList.filter(artist => {
       return artist.name.toUpperCase().includes(value.toUpperCase());
     });
     let filteredGenres = genresList.filter(genre => {
-      return genre.title.toUpperCase().includes(value.toUpperCase());
+      return genre.description.toUpperCase().includes(value.toUpperCase());
     });
     this.setState({
       songsList: filteredSongs,
       genresList: filteredGenres,
-      filteredArtists: filteredArtists
+      artistsList: filteredArtists
     });
   }
 
