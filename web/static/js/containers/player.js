@@ -30,8 +30,7 @@ class PlayerContainer extends Component {
     random: false,
     repeat: false,
     mute: false,
-    play: this.props.autoplay || false,
-    songs: this.props.songs
+    play: this.props.autoplay || false
   }
 
   componentDidMount = () => {
@@ -89,16 +88,16 @@ class PlayerContainer extends Component {
   }
 
   next = () => {
-    var total = this.state.songs.length;
+    var total = this.props.songs.length;
     let current = this.state.current;
     if(!this.state.repeat){
       if(!this.state.random){
-        current = this.state.current < total - 1 ? this.state.current + 1 : 0
+        current = this.state.current < total - 1 ? this.state.current + 1 : 0;
       } else {
         current = Math.floor(Math.random() * total)
       }
     }
-    var active = this.state.songs[current];
+    var active = this.props.songs[current];
     this.setState({ current: current, active: active, progress: 0 });
 
     this.refs.player.src = active.url;
@@ -106,9 +105,9 @@ class PlayerContainer extends Component {
   }
 
   previous = () => {
-    var total = this.state.songs.length;
+    var total = this.props.songs.length;
     var current = (this.state.current > 0) ? this.state.current - 1 : total - 1;
-    var active = this.state.songs[current];
+    var active = this.props.songs[current];
 
     this.setState({ current: current, active: active, progress: 0 });
 
