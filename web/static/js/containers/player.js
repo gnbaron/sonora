@@ -85,14 +85,20 @@ class PlayerContainer extends Component {
   }
 
   end = () => {
-    (this.state.repeat) ? this.play() : this.setState({ play: false });
+    this.next();
   }
 
   next = () => {
     var total = this.state.songs.length;
-    var current = (this.state.repeat) ? this.state.current : (this.state.current < total - 1) ? this.state.current + 1 : 0;
+    let current = this.state.current;
+    if(!this.state.repeat){
+      if(!this.state.random){
+        current = this.state.current < total - 1 ? this.state.current + 1 : 0
+      } else {
+        current = Math.floor(Math.random() * total)
+      }
+    }
     var active = this.state.songs[current];
-
     this.setState({ current: current, active: active, progress: 0 });
 
     this.refs.player.src = active.url;
@@ -111,8 +117,7 @@ class PlayerContainer extends Component {
   }
 
   randomize = () => {
-    var s = shuffle(this.state.songs.slice());
-    this.setState({ songs: (!this.state.random) ? s : this.state.songs, random: !this.state.random });
+    this.setState({ random: !this.state.random });
   }
 
   repeat = () => {
