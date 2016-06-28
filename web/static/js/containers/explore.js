@@ -9,6 +9,7 @@ import * as playlist from '../redux/modules/playlist';
 import Search from '../components/search';
 import Table, { Thead, Column } from '../components/table';
 import { bindAsyncActionCreator } from '../utils';
+import rd3 from 'rd3';
 
 const mapStateToProps = (state) => ({
   currentUser: state.session.currentUser,
@@ -176,6 +177,79 @@ export default class Explore extends Component {
     )
   }
 
+  _renderBarChart() {
+    const BarChart = rd3.BarChart;
+    let { songsList, genresList } = this.state;
+    let data = genresList.map(genre => {
+      let filteredSongs = songsList.filter(song => song.genre_id === genre.id).length;
+      return {'x': genre.description, 'y': filteredSongs};
+    })
+    return (
+      <div className="chart">
+        <BarChart
+          data={[
+            {name: 'Songs', values: [...data]}
+          ]}
+          width={450}
+          height={400}
+          fill={'#3182bd'}
+          title='Songs/Genre'
+          yAxisLabel='Songs'
+          xAxisLabel='Genre' />
+      </div>
+    )
+  }
+
+  _renderArtistsChart() {
+    const PieChart = rd3.PieChart;
+    let { songsList, artistsList } = this.state;
+    let data = [];
+    artistsList.forEach(artist => {
+      let filteredSongs = songsList.filter(song => song.artist_id === artist.id).length;
+      if(filteredSongs > 0){
+        let value = (filteredSongs * 100) / songsList.length;
+        data.push({label: artist.name, value: Math.round(value * 100) / 100 });
+      }
+    })
+    return (
+      <div className="chart">
+        <PieChart
+        data={data}
+        width={450}
+        height={400}
+        radius={120}
+        innerRadius={20}
+        sectorBorderColor="white"
+        title="Songs/Artist" />
+      </div>
+    )
+  }
+
+  _renderGenresChart() {
+    const PieChart = rd3.PieChart;
+    let { songsList, genresList } = this.state;
+    let data = [];
+    genresList.forEach(genre => {
+      let filteredSongs = songsList.filter(song => song.genre_id === genre.id).length;
+      if(filteredSongs > 0){
+        let value = (filteredSongs * 100) / songsList.length;
+        data.push({label: genre.description, value: Math.round(value * 100) / 100 });
+      }
+    })
+    return (
+      <div className="chart">
+        <PieChart
+        data={data}
+        width={450}
+        height={400}
+        radius={120}
+        innerRadius={20}
+        sectorBorderColor="white"
+        title="Songs/Genre" />
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="page">
@@ -197,6 +271,17 @@ export default class Explore extends Component {
               </div>
               <div className="column is-half">
                 {this._renderArtistsBox()}
+              </div>
+            </div>
+            <div className="columns">
+              <div className="column is-third">
+                {this._renderGenresChart()}
+              </div>
+              <div className="column is-third">
+                {this._renderBarChart()}
+              </div>
+              <div className="column is-third">
+                {this._renderArtistsChart()}
               </div>
             </div>
           </div>
